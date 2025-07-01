@@ -1,0 +1,15 @@
+ColorRect
+MarginContainer
+Line2D
+Area2D
+HitboxComponent
+Node
+Sprite2D
+Label
+CollisionShape2D
+CharacterBody2D
+AnimationPlayer
+CPUParticles2D
+AnimationTree
+Timer
+HBoxContainer

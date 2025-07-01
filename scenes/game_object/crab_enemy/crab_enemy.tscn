@@ -1,0 +1,58 @@
+[gd_scene load_steps=13 format=3 uid="uid://cdumd628hcuha"]
+
+[ext_resource type="PackedScene" uid="uid://dvd1na7qu2vg" path="res://scenes/components/health_component.tscn" id="1_4jlly"]
+[ext_resource type="Script" uid="uid://4w235ual5l0x" path="res://scenes/game_object/crab_enemy/crab_enemy.gd" id="1_iy52x"]
+[ext_resource type="PackedScene" uid="uid://d17a4158ewtet" path="res://scenes/components/vial_drop_component.tscn" id="2_p7517"]
+[ext_resource type="PackedScene" uid="uid://dwe8vjse1qr7p" path="res://scenes/components/death_component.tscn" id="3_iy52x"]
+[ext_resource type="Texture2D" uid="uid://dco7abkbogg36" path="res://scenes/game_object/crab_enemy/crab_enemy.png" id="4_h21a0"]
+[ext_resource type="PackedScene" uid="uid://b2wep08rfvgkm" path="res://scenes/components/velocity_component.tscn" id="4_r7qr8"]
+[ext_resource type="PackedScene" uid="uid://brh7td61r7yyx" path="res://scenes/components/hit_flash_component.tscn" id="5_g36cv"]
+[ext_resource type="PackedScene" uid="uid://dj1aah8co6imq" path="res://scenes/components/hurtbox_component.tscn" id="5_r7qr8"]
+[ext_resource type="Shader" uid="uid://dkakhlsscx6su" path="res://scenes/components/hit_flash_component.gdshader" id="6_c3a6l"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_r7qr8"]
+resource_local_to_scene = true
+shader = ExtResource("6_c3a6l")
+shader_parameter/lerp_percent = 0.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_g36cv"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_c3a6l"]
+
+[node name="CrabEnemy" type="CharacterBody2D" groups=["enemy"]]
+collision_layer = 8
+collision_mask = 9
+script = ExtResource("1_iy52x")
+
+[node name="HealthComponent" parent="." instance=ExtResource("1_4jlly")]
+max_health = 30.0
+
+[node name="VialDropComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("2_p7517")]
+health_component = NodePath("../HealthComponent")
+
+[node name="VelocityComponent" parent="." instance=ExtResource("4_r7qr8")]
+max_speed = 200
+acceleration = 1.0
+
+[node name="HitFlashComponent" parent="." node_paths=PackedStringArray("health_component", "sprite") instance=ExtResource("5_g36cv")]
+health_component = NodePath("../HealthComponent")
+sprite = NodePath("../Sprite2D")
+hit_flash_material = SubResource("ShaderMaterial_r7qr8")
+
+[node name="DeathComponent" parent="." node_paths=PackedStringArray("health_component", "sprite") instance=ExtResource("3_iy52x")]
+health_component = NodePath("../HealthComponent")
+sprite = NodePath("../Sprite2D")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("4_h21a0")
+
+[node name="HurtboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("5_r7qr8")]
+health_component = NodePath("../HealthComponent")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
+scale = Vector2(0.9, 0.9)
+shape = SubResource("CircleShape2D_g36cv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(0.65, 0.65)
+shape = SubResource("CircleShape2D_c3a6l")

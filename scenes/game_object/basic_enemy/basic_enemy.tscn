@@ -1,0 +1,73 @@
+[gd_scene load_steps=13 format=3 uid="uid://du685idwy0ify"]
+
+[ext_resource type="Script" uid="uid://bo15tcbguier5" path="res://scenes/game_object/basic_enemy/basic_enemy.gd" id="1_qfmy1"]
+[ext_resource type="Texture2D" uid="uid://b5nvrw2gwnr2" path="res://scenes/game_object/basic_enemy/basic_enemy.png" id="2_7e30h"]
+[ext_resource type="PackedScene" uid="uid://dvd1na7qu2vg" path="res://scenes/components/health_component.tscn" id="2_isd1k"]
+[ext_resource type="PackedScene" uid="uid://d17a4158ewtet" path="res://scenes/components/vial_drop_component.tscn" id="3_pcrk2"]
+[ext_resource type="PackedScene" uid="uid://dwe8vjse1qr7p" path="res://scenes/components/death_component.tscn" id="4_bq7hi"]
+[ext_resource type="PackedScene" uid="uid://dj1aah8co6imq" path="res://scenes/components/hurtbox_component.tscn" id="4_elloc"]
+[ext_resource type="PackedScene" uid="uid://b2wep08rfvgkm" path="res://scenes/components/velocity_component.tscn" id="4_jkye5"]
+[ext_resource type="PackedScene" uid="uid://brh7td61r7yyx" path="res://scenes/components/hit_flash_component.tscn" id="8_v58qd"]
+
+[sub_resource type="Shader" id="Shader_v58qd"]
+resource_local_to_scene = true
+code = "shader_type canvas_item;
+
+uniform float lerp_percent: hint_range(0.0, 1.0);
+
+void fragment() {
+	vec4 texture_color = texture(TEXTURE, UV);
+	vec4 final_color = mix(texture_color, vec4(1.0, 1.0, 1.0, texture_color.a), lerp_percent);
+	COLOR = final_color;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_t4oqy"]
+resource_local_to_scene = true
+shader = SubResource("Shader_v58qd")
+shader_parameter/lerp_percent = 0.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bq7hi"]
+radius = 14.0357
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xfhaa"]
+radius = 6.0
+
+[node name="BasicEnemy" type="CharacterBody2D" groups=["enemy"]]
+collision_layer = 9
+collision_mask = 9
+motion_mode = 1
+script = ExtResource("1_qfmy1")
+
+[node name="HealthComponent" parent="." instance=ExtResource("2_isd1k")]
+
+[node name="VialDropComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("3_pcrk2")]
+health_component = NodePath("../HealthComponent")
+
+[node name="VelocityComponent" parent="." instance=ExtResource("4_jkye5")]
+max_speed = 105
+
+[node name="HitFlashComponent" parent="." node_paths=PackedStringArray("health_component", "sprite") instance=ExtResource("8_v58qd")]
+health_component = NodePath("../HealthComponent")
+sprite = NodePath("../Sprite2D")
+hit_flash_material = SubResource("ShaderMaterial_t4oqy")
+
+[node name="DeathComponent" parent="." node_paths=PackedStringArray("health_component", "sprite") instance=ExtResource("4_bq7hi")]
+health_component = NodePath("../HealthComponent")
+sprite = NodePath("../Sprite2D")
+
+[node name="HurtboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("4_elloc")]
+health_component = NodePath("../HealthComponent")
+
+[node name="HurtBox" type="CollisionShape2D" parent="HurtboxComponent"]
+light_mask = 5
+visibility_layer = 5
+position = Vector2(0, -4)
+shape = SubResource("CircleShape2D_bq7hi")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -4)
+texture = ExtResource("2_7e30h")
+
+[node name="HitBox" type="CollisionShape2D" parent="."]
+position = Vector2(0, -4)
+shape = SubResource("CircleShape2D_xfhaa")
