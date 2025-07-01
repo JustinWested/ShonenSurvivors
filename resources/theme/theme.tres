@@ -1,0 +1,28 @@
+[gd_resource type="Theme" load_steps=5 format=3 uid="uid://6mdh6taieuwj"]
+
+[ext_resource type="Texture2D" uid="uid://dkwwyrguosovb" path="res://assets/ui/ui.png" id="1_8n3oo"]
+[ext_resource type="FontFile" uid="uid://bsddwustwfuy3" path="res://resources/theme/Stacked pixel.ttf" id="2_orw62"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8n3oo"]
+texture = ExtResource("1_8n3oo")
+texture_margin_left = 11.0
+texture_margin_top = 1.0
+texture_margin_right = 11.0
+texture_margin_bottom = 1.0
+region_rect = Rect2(18, 2, 12, 12)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_56c54"]
+texture = ExtResource("1_8n3oo")
+texture_margin_left = 4.0
+texture_margin_top = 13.0
+texture_margin_right = 4.0
+texture_margin_bottom = 10.0
+region_rect = Rect2(0, 0, 16, 16)
+
+[resource]
+default_font = ExtResource("2_orw62")
+default_font_size = 16
+AlternatePanelContainer/base_type = &"PanelContainer"
+AlternatePanelContainer/styles/panel = SubResource("StyleBoxTexture_8n3oo")
+Label/constants/line_spacing = -20
+PanelContainer/styles/panel = SubResource("StyleBoxTexture_56c54")
