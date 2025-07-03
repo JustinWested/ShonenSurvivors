@@ -19,3 +19,5 @@ res://scenes/components/hit_flash_component.tscn
 res://scenes/game_object/basic_enemy/basic_enemy.tscn
 res://scenes/manager/experience_manager.tscn
 res://scenes/ui/experience_bar.tscn
+res://scenes/ui/ability_upgrade_card.gd
+res://scenes/ui/upgrade_screen.gd
