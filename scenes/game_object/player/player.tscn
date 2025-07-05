@@ -1,12 +1,15 @@
-[gd_scene load_steps=10 format=3 uid="uid://bvjm48jsdwgbq"]
+[gd_scene load_steps=16 format=3 uid="uid://bvjm48jsdwgbq"]
 
 [ext_resource type="Script" uid="uid://cm76frtsjot8a" path="res://scenes/game_object/player/player.gd" id="1_cakcy"]
 [ext_resource type="Texture2D" uid="uid://c2lvwmh5nio2b" path="res://scenes/game_object/player/player.png" id="1_f7eaw"]
 [ext_resource type="PackedScene" uid="uid://lu65a8aiivjp" path="res://scenes/ability/sword_ability_controller/sword_ability_controller.tscn" id="2_33fdn"]
 [ext_resource type="PackedScene" uid="uid://dvd1na7qu2vg" path="res://scenes/components/health_component.tscn" id="2_ss5pk"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ss5pk"]
-bg_color = Color(0.247059, 0.14902, 0.192157, 1)
+[ext_resource type="PackedScene" uid="uid://b2wep08rfvgkm" path="res://scenes/components/velocity_component.tscn" id="2_tj6oj"]
+[ext_resource type="AudioStream" uid="uid://qxt87bhl66a2" path="res://assets/audio/impactMining_000.ogg" id="6_28lpv"]
+[ext_resource type="AudioStream" uid="uid://lf1sriur12ma" path="res://assets/audio/impactMining_001.ogg" id="7_gbew5"]
+[ext_resource type="AudioStream" uid="uid://sjphtms0bi4u" path="res://assets/audio/impactMining_002.ogg" id="8_oxhc3"]
+[ext_resource type="AudioStream" uid="uid://cn0fk7qhx3oq5" path="res://assets/audio/impactMining_003.ogg" id="9_mxgtx"]
+[ext_resource type="AudioStream" uid="uid://4j8atqup55b6" path="res://assets/audio/impactMining_004.ogg" id="10_l1g56"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tj6oj"]
 bg_color = Color(0.262745, 0.882353, 0.701961, 1)
@@ -24,10 +27,22 @@ radius = 30.0167
 [sub_resource type="CircleShape2D" id="CircleShape2D_qmfrx"]
 radius = 5.0
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_llc7q"]
+streams_count = 5
+stream_0/stream = ExtResource("6_28lpv")
+stream_1/stream = ExtResource("7_gbew5")
+stream_2/stream = ExtResource("8_oxhc3")
+stream_3/stream = ExtResource("9_mxgtx")
+stream_4/stream = ExtResource("10_l1g56")
+
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 collision_layer = 17
 motion_mode = 1
 script = ExtResource("1_cakcy")
+
+[node name="VelocityComponent" parent="." instance=ExtResource("2_tj6oj")]
+max_speed = 140
+acceleration = 30.0
 
 [node name="HealthComponent" parent="." instance=ExtResource("2_ss5pk")]
 
@@ -46,13 +61,13 @@ offset_top = 1.0
 offset_right = 14.0
 offset_bottom = 6.0
 pivot_offset = Vector2(14, 2)
-theme_override_styles/background = SubResource("StyleBoxFlat_ss5pk")
 theme_override_styles/fill = SubResource("StyleBoxFlat_tj6oj")
 max_value = 1.0
 value = 0.5
 show_percentage = false
 
 [node name="PickupArea2D" type="Area2D" parent="."]
+visible = false
 collision_layer = 16
 collision_mask = 0
 
@@ -61,6 +76,7 @@ position = Vector2(0, -5)
 shape = SubResource("CircleShape2D_s3670")
 
 [node name="CollisionArea2D" type="Area2D" parent="."]
+visible = false
 position = Vector2(0, -6)
 collision_layer = 0
 collision_mask = 8
@@ -77,3 +93,8 @@ offset = Vector2(0, -8)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -5)
 shape = SubResource("CircleShape2D_qmfrx")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_llc7q")
+volume_db = -12.0
+pitch_scale = 1.11

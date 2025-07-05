@@ -1,10 +1,85 @@
-[gd_scene load_steps=2 format=3 uid="uid://bolyvarva60kh"]
+[gd_scene load_steps=9 format=3 uid="uid://bolyvarva60kh"]
 
 [ext_resource type="Script" uid="uid://bqod5l48mcg6" path="res://scenes/ui/end_screen.gd" id="1_4ttpn"]
+[ext_resource type="PackedScene" uid="uid://bfu8cj3s2kvu" path="res://scenes/ui/sound_button.tscn" id="2_n8r4t"]
+[ext_resource type="AudioStream" uid="uid://ce4hwb0111a6q" path="res://assets/audio/Clear.wav" id="3_53v5j"]
+[ext_resource type="AudioStream" uid="uid://c25qmboi2ordg" path="res://assets/audio/GameOver.wav" id="4_e4cmn"]
+
+[sub_resource type="Animation" id="Animation_bd1lb"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_eg2gl"]
+resource_name = "in"
+length = 0.15
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.149143),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_xpnye"]
+resource_name = "out"
+length = 0.15
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.149143),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_k541j"]
+_data = {
+&"RESET": SubResource("Animation_bd1lb"),
+&"in": SubResource("Animation_eg2gl"),
+&"out": SubResource("Animation_xpnye")
+}
 
 [node name="EndScreen" type="CanvasLayer"]
 process_mode = 3
+layer = 3
 script = ExtResource("1_4ttpn")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../ColorRect")
+libraries = {
+&"": SubResource("AnimationLibrary_k541j")
+}
+autoplay = "in"
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.14902, 0.168627, 0.266667, 0.647059)
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchors_preset = 15
@@ -14,6 +89,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="PanelContainer" type="PanelContainer" parent="MarginContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -31,7 +107,9 @@ layout_mode = 2
 [node name="TitleLabel" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_font_sizes/font_size = 38
+theme_override_colors/font_outline_color = Color(0.14902, 0.168627, 0.266667, 1)
+theme_override_constants/outline_size = 16
+theme_override_font_sizes/font_size = 48
 text = "Victory"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -39,6 +117,9 @@ vertical_alignment = 1
 [node name="DescriptionLabel" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_colors/font_outline_color = Color(0.14902, 0.168627, 0.266667, 1)
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 16
 text = "You got that juice"
 horizontal_alignment = 1
 
@@ -52,9 +133,9 @@ custom_minimum_size = Vector2(180, 0)
 layout_mode = 2
 alignment = 1
 
-[node name="QuitButton" type="Button" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer"]
+[node name="QuitButton" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer" instance=ExtResource("2_n8r4t")]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(65, 0)
+custom_minimum_size = Vector2(70, 25)
 layout_mode = 2
 text = "Quit"
 
@@ -63,7 +144,18 @@ layout_mode = 2
 theme_override_constants/margin_left = 3
 theme_override_constants/margin_right = 3
 
-[node name="RestartButton" type="Button" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer"]
+[node name="RestartButton" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer" instance=ExtResource("2_n8r4t")]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(70, 25)
 layout_mode = 2
 text = "Restart"
+
+[node name="VictoryStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_53v5j")
+volume_db = -30.0
+bus = &"music"
+
+[node name="DefeatStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_e4cmn")
+volume_db = -30.0
+bus = &"music"

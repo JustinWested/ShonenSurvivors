@@ -16,6 +16,7 @@ func play_in(delay: float = 0):
 	modulate = Color.TRANSPARENT
 	await get_tree().create_timer(delay).timeout
 	$AnimationPlayer.play("in")
+	
 
 func select_card():
 	disabled = true
@@ -26,9 +27,11 @@ func select_card():
 			continue
 		other_card.play_discard()
 	
+	
 	await $AnimationPlayer.animation_finished
 	selected.emit()
-
+	
+	
 func play_discard():
 	$AnimationPlayer.play("discard")
 
@@ -44,9 +47,11 @@ func on_gui_input(event: InputEvent):
 		select_card()
 
 func on_mouse_entered():
-	if disabled:
+	if disabled == true:
+		print("disabled is true")
 		return
 	$HoverAnimationPlayer.play("hover")
 
 func on_mouse_exited():
+	
 	$HoverAnimationPlayer.play("RESET")

@@ -1,7 +1,12 @@
-[gd_scene load_steps=7 format=3 uid="uid://dwe8vjse1qr7p"]
+[gd_scene load_steps=13 format=3 uid="uid://dwe8vjse1qr7p"]
 
 [ext_resource type="Script" uid="uid://3iapb718drpw" path="res://scenes/components/death_component.gd" id="1_ddno3"]
 [ext_resource type="Texture2D" uid="uid://b5nvrw2gwnr2" path="res://scenes/game_object/basic_enemy/basic_enemy.png" id="2_ka72u"]
+[ext_resource type="AudioStream" uid="uid://281em73dxapv" path="res://assets/audio/footstep_carpet_000.ogg" id="3_enba1"]
+[ext_resource type="AudioStream" uid="uid://fj06ehrep25f" path="res://assets/audio/footstep_carpet_001.ogg" id="4_ek54q"]
+[ext_resource type="AudioStream" uid="uid://c7hx1jyjvbxjb" path="res://assets/audio/footstep_carpet_002.ogg" id="5_86rsr"]
+[ext_resource type="AudioStream" uid="uid://dyqde6hcew5cu" path="res://assets/audio/footstep_carpet_003.ogg" id="6_uboot"]
+[ext_resource type="AudioStream" uid="uid://lcts8w2x5k5j" path="res://assets/audio/footstep_carpet_004.ogg" id="7_kb01q"]
 
 [sub_resource type="Animation" id="Animation_cshdr"]
 length = 0.001
@@ -57,6 +62,14 @@ _data = {
 _data = [Vector2(0.625, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 2
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_jns4a"]
+streams_count = 5
+stream_0/stream = ExtResource("3_enba1")
+stream_1/stream = ExtResource("4_ek54q")
+stream_2/stream = ExtResource("5_86rsr")
+stream_3/stream = ExtResource("6_uboot")
+stream_4/stream = ExtResource("7_kb01q")
+
 [node name="DeathComponent" type="Node2D"]
 script = ExtResource("1_ddno3")
 
@@ -79,3 +92,8 @@ initial_velocity_max = 345.0
 angular_velocity_min = -1440.0
 angular_velocity_max = 1440.0
 scale_amount_curve = SubResource("Curve_enba1")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_jns4a")
+max_distance = 295.0
+bus = &"sfx"

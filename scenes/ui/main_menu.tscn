@@ -1,0 +1,67 @@
+[gd_scene load_steps=4 format=3 uid="uid://u5o0yji32q3c"]
+
+[ext_resource type="Script" uid="uid://b5mnhjbermeti" path="res://scenes/ui/main_menu.gd" id="1_fe2o3"]
+[ext_resource type="PackedScene" uid="uid://bfu8cj3s2kvu" path="res://scenes/ui/sound_button.tscn" id="2_1g8jr"]
+[ext_resource type="PackedScene" uid="uid://fg3si73tjlgi" path="res://scenes/ui/vignette.tscn" id="2_m1kxf"]
+
+[node name="MainMenu" type="CanvasLayer"]
+script = ExtResource("1_fe2o3")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_type_variation = &"BlueOutlineLabel"
+theme_override_font_sizes/font_size = 64
+text = "Shonen Survivors"
+
+[node name="PlayButton" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer" instance=ExtResource("2_1g8jr")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 32
+text = "play"
+
+[node name="OptionsButton" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer" instance=ExtResource("2_1g8jr")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 32
+text = "Options"
+
+[node name="QuitButton" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer" instance=ExtResource("2_1g8jr")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 32
+text = "Quit"
+
+[node name="Vignette" parent="." instance=ExtResource("2_m1kxf")]

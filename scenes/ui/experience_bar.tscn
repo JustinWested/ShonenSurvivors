@@ -1,21 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://b164lhpty5c0f"]
+[gd_scene load_steps=3 format=3 uid="uid://b164lhpty5c0f"]
 
 [ext_resource type="Script" uid="uid://b8ks0mwo2ypa3" path="res://scenes/ui/experience_bar.gd" id="1_r233f"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r233f"]
-bg_color = Color(0.298039, 0.298039, 0.298039, 0.607843)
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gmm3j"]
 bg_color = Color(1, 0.805858, 0.171065, 1)
-
-[sub_resource type="Theme" id="Theme_r233f"]
-ProgressBar/colors/font_color = Color(0, 0, 0, 1)
-ProgressBar/colors/font_outline_color = Color(0, 0, 0, 1)
-ProgressBar/constants/outline_size = 0
-ProgressBar/font_sizes/font_size = 16
-ProgressBar/fonts/font = null
-ProgressBar/styles/background = SubResource("StyleBoxFlat_r233f")
-ProgressBar/styles/fill = SubResource("StyleBoxFlat_gmm3j")
 
 [node name="ExperienceBar" type="CanvasLayer"]
 script = ExtResource("1_r233f")
@@ -33,7 +21,7 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
 mouse_filter = 2
-theme = SubResource("Theme_r233f")
+theme_override_styles/fill = SubResource("StyleBoxFlat_gmm3j")
 max_value = 1.0
 value = 0.5
 show_percentage = false

@@ -1,6 +1,11 @@
-[gd_scene load_steps=12 format=3 uid="uid://cvtimlvn2y4se"]
+[gd_scene load_steps=18 format=3 uid="uid://cvtimlvn2y4se"]
 
 [ext_resource type="Script" uid="uid://drqa615y6m2yo" path="res://scenes/ui/ability_upgrade_card.gd" id="1_8ur3e"]
+[ext_resource type="AudioStream" uid="uid://bt2w0fn46o8bf" path="res://assets/audio/switch1.ogg" id="2_jntrk"]
+[ext_resource type="AudioStream" uid="uid://cwff73l1ic0nv" path="res://assets/audio/switch2.ogg" id="3_kvqqb"]
+[ext_resource type="AudioStream" uid="uid://d2kkb2qxabgrh" path="res://assets/audio/switch3.ogg" id="4_rc78b"]
+[ext_resource type="AudioStream" uid="uid://cg5irbeixu0y0" path="res://assets/audio/switch4.ogg" id="5_uq1wo"]
+[ext_resource type="AudioStream" uid="uid://dbv0lj81xnetk" path="res://assets/audio/switch5.ogg" id="6_fgi3g"]
 
 [sub_resource type="Animation" id="Animation_8ur3e"]
 resource_name = "in"
@@ -57,17 +62,16 @@ tracks/1/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 1)]
 }
-tracks/2/type = "value"
+tracks/2/type = "bezier"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath(".:position")
+tracks/2/path = NodePath(".:position:y")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 0)]
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.2, 0, 0.2, 0),
+"times": PackedFloat32Array(0)
 }
 
 [sub_resource type="Animation" id="Animation_rxqlh"]
@@ -86,22 +90,35 @@ tracks/0/keys = {
 "update": 0,
 "values": [Vector2(1, 1), Vector2(1.2, 1.2), Vector2(0, 0)]
 }
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ClickPlayer2D")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}]
+}
 
 [sub_resource type="Animation" id="Animation_jntrk"]
 resource_name = "discard"
 length = 0.4
 step = 0.05
-tracks/0/type = "value"
+tracks/0/type = "bezier"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 2
+tracks/0/path = NodePath(".:position:y")
+tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.05, 0.4),
-"transitions": PackedFloat32Array(1, 2, 1),
-"update": 0,
-"values": [Vector2(0, 0), Vector2(0, 45.58), Vector2(0, -900)]
+"handle_modes": PackedInt32Array(0, 0, 0, 0),
+"points": PackedFloat32Array(0, -0.2, 0, 0, -358, 58, -0.2, 0, 0.2, 0, -900, -0.2, 0, 0.2, 0, -900, -0.2, 0, 0.2, 0),
+"times": PackedFloat32Array(0, 0.1, 0.399422, 0.4)
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_c4j7u"]
@@ -114,19 +131,34 @@ _data = {
 
 [sub_resource type="Animation" id="Animation_c4j7u"]
 resource_name = "hover"
+length = 0.9
 loop_mode = 1
 step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath(".:scale")
-tracks/0/interp = 2
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5, 1),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0, 0.301307, 0.600571, 0.899835),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
-"values": [Vector2(1, 1), Vector2(1.1, 1.1), Vector2(1, 1)]
+"values": [0.0, 0.0349066, -0.0349066, -1.92122e-05]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("HoverPlayer2D")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_uhqci"]
@@ -134,14 +166,14 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath(".:scale")
+tracks/0/path = NodePath(".:rotation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(1, 1)]
+"values": [0.0]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_rxqlh"]
@@ -149,6 +181,15 @@ _data = {
 &"RESET": SubResource("Animation_uhqci"),
 &"hover": SubResource("Animation_c4j7u")
 }
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_pc0nf"]
+random_pitch = 1.13
+streams_count = 5
+stream_0/stream = ExtResource("2_jntrk")
+stream_1/stream = ExtResource("3_kvqqb")
+stream_2/stream = ExtResource("4_rc78b")
+stream_3/stream = ExtResource("5_uq1wo")
+stream_4/stream = ExtResource("6_fgi3g")
 
 [sub_resource type="LabelSettings" id="LabelSettings_8ur3e"]
 outline_size = 16
@@ -176,6 +217,16 @@ libraries = {
 libraries = {
 &"": SubResource("AnimationLibrary_rxqlh")
 }
+
+[node name="HoverPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_pc0nf")
+volume_db = -15.0
+bus = &"sfx"
+
+[node name="ClickPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_pc0nf")
+volume_db = -15.0
+bus = &"sfx"
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 custom_minimum_size = Vector2(0, 120)

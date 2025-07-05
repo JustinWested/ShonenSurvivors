@@ -26,6 +26,8 @@ func start_homing_tween():
 		.set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_QUAD)
 	tween.tween_property(sprite, "scale", Vector2.ZERO, 0.05).set_delay(0.45)
 	tween.chain().tween_callback(collect)
+	
+	$AudioStreamPlayer2D.play()
 
 func tween_collect(percent: float, start_position: Vector2):
 	var player = get_tree().get_first_node_in_group("player")

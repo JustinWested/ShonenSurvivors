@@ -1,12 +1,31 @@
-[gd_scene load_steps=4 format=3 uid="uid://c8irx3t04bigi"]
+[gd_scene load_steps=10 format=3 uid="uid://c8irx3t04bigi"]
 
 [ext_resource type="Script" uid="uid://bbt3r66ghe5pg" path="res://scenes/game_object/experience_vial/experience_vial.gd" id="1_jmuu1"]
 [ext_resource type="Texture2D" uid="uid://ddw5ummrmjbkd" path="res://scenes/game_object/experience_vial/experience_vial.png" id="2_orspf"]
+[ext_resource type="AudioStream" uid="uid://dypsbdb01l8cv" path="res://assets/audio/impactMetal_heavy_000.ogg" id="2_p8plb"]
+[ext_resource type="AudioStream" uid="uid://b3cjc8dpf18wr" path="res://assets/audio/impactMetal_heavy_001.ogg" id="3_4w5ru"]
+[ext_resource type="AudioStream" uid="uid://curfuy0h462tr" path="res://assets/audio/impactMetal_heavy_002.ogg" id="4_2rrn7"]
+[ext_resource type="AudioStream" uid="uid://8s57xv502wcb" path="res://assets/audio/impactMetal_heavy_003.ogg" id="5_3wn1x"]
+[ext_resource type="AudioStream" uid="uid://dk5m00e2jyffp" path="res://assets/audio/impactMetal_heavy_004.ogg" id="6_bscgk"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_r5rcv"]
+random_pitch = 1.14
+streams_count = 5
+stream_0/stream = ExtResource("2_p8plb")
+stream_1/stream = ExtResource("3_4w5ru")
+stream_2/stream = ExtResource("4_2rrn7")
+stream_3/stream = ExtResource("5_3wn1x")
+stream_4/stream = ExtResource("6_bscgk")
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_0himn"]
 
 [node name="ExperienceVial" type="Node2D"]
 script = ExtResource("1_jmuu1")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_r5rcv")
+volume_db = -30.0
+max_distance = 300.0
 
 [node name="Area2D" type="Area2D" parent="."]
 collision_layer = 0

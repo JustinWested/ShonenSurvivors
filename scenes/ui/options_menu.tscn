@@ -1,0 +1,119 @@
+[gd_scene load_steps=5 format=3 uid="uid://e4fyw57cob6n"]
+
+[ext_resource type="Script" uid="uid://cgue4l4k6v5kh" path="res://scenes/ui/options_menu.gd" id="1_wj2x4"]
+[ext_resource type="PackedScene" uid="uid://fg3si73tjlgi" path="res://scenes/ui/vignette.tscn" id="2_0ejsc"]
+[ext_resource type="AudioStream" uid="uid://lf1sriur12ma" path="res://assets/audio/impactMining_001.ogg" id="2_c4822"]
+[ext_resource type="PackedScene" uid="uid://bfu8cj3s2kvu" path="res://scenes/ui/sound_button.tscn" id="2_imaij"]
+
+[node name="OptionsMenu" type="CanvasLayer"]
+layer = 2
+script = ExtResource("1_wj2x4")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 16
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_type_variation = &"BlueOutlineLabel"
+theme_override_font_sizes/font_size = 64
+text = "Options"
+horizontal_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="MasterVolumeOptionContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/MasterVolumeOptionContainer"]
+layout_mode = 2
+theme_type_variation = &"BlueOutlineLabel"
+text = "Master Volume"
+
+[node name="MasterSlider" type="HSlider" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/MasterVolumeOptionContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+
+[node name="SfxOptionContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/SfxOptionContainer"]
+layout_mode = 2
+theme_type_variation = &"BlueOutlineLabel"
+text = "SFX Volume"
+
+[node name="SfxSlider" type="HSlider" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/SfxOptionContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/SfxOptionContainer/SfxSlider"]
+unique_name_in_owner = true
+stream = ExtResource("2_c4822")
+bus = &"sfx"
+
+[node name="MusicOptionContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/MusicOptionContainer"]
+layout_mode = 2
+theme_type_variation = &"BlueOutlineLabel"
+text = "Music Volume"
+
+[node name="MusicSlider" type="HSlider" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/MusicOptionContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+
+[node name="WindowOptionContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/WindowOptionContainer"]
+layout_mode = 2
+theme_type_variation = &"BlueOutlineLabel"
+text = "Window Mode"
+
+[node name="WindowButton" type="CheckButton" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/WindowOptionContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="BackButton" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer" instance=ExtResource("2_imaij")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 32
+text = "Back"
+
+[node name="Vignette" parent="." instance=ExtResource("2_0ejsc")]
