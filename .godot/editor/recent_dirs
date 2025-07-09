@@ -1,5 +1,6 @@
-res://scenes/ui
 res://scenes/autoload
+res://resources/meta_upgrades
+res://scenes/ui
 res://scenes/game_object/experience_vial
 res://scenes/components
 res://resources/theme

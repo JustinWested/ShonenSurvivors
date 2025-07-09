@@ -54,4 +54,6 @@ func on_sfx_drag_ended(value_changed: bool):
 	$%AudioStreamPlayer.play()
 
 func on_back_pressed():
+	ScreenTransition.transition()
+	await ScreenTransition.transitioned_halfway
 	back_pressed.emit()

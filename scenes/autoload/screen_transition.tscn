@@ -1,0 +1,82 @@
+[gd_scene load_steps=8 format=3 uid="uid://crkf6uu330j7u"]
+
+[ext_resource type="Script" uid="uid://eyslj0i80hti" path="res://scenes/autoload/screen_transition.gd" id="1_hctam"]
+[ext_resource type="Shader" uid="uid://ungo86wjscg6" path="res://scenes/autoload/screen_transition.gdshader" id="2_pg7gk"]
+[ext_resource type="Texture2D" uid="uid://cy6h0jiliv77s" path="res://scenes/ui/screen_transition.png" id="3_gu3hx"]
+
+[sub_resource type="Animation" id="Animation_csd2v"]
+resource_name = "default"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:material:shader_parameter/percent")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1.93187, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.4),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"emit_transitioned_halfway"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_nfrhq"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:material:shader_parameter/percent")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jaawj"]
+_data = {
+&"RESET": SubResource("Animation_nfrhq"),
+&"default": SubResource("Animation_csd2v")
+}
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8pl64"]
+shader = ExtResource("2_pg7gk")
+shader_parameter/transition_color = Color(0.247059, 0.14902, 0.192157, 1)
+shader_parameter/transition_texture = ExtResource("3_gu3hx")
+shader_parameter/percent = 0.0
+
+[node name="ScreenTransition" type="CanvasLayer"]
+process_mode = 3
+layer = 5
+script = ExtResource("1_hctam")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_jaawj")
+}
+
+[node name="ColorRect" type="ColorRect" parent="."]
+process_mode = 3
+material = SubResource("ShaderMaterial_8pl64")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2

@@ -49,3 +49,12 @@ res://scenes/ui/options_menu.gd
 res://scenes/ui/pause_menu.tscn
 res://scenes/ui/pause_menu.gd
 res://scenes/main/main.gd
+res://scenes/autoload/screen_transition.gdshader
+res://scenes/autoload/screen_transition.gd
+res://scenes/autoload/screen_transition.tscn
+res://scenes/autoload/meta_progression.gd
+res://resources/meta_upgrades/meta_upgrade.gd
+res://scenes/autoload/meta_progression.tscn
+res://resources/meta_upgrades/experience_gain.tres
+res://scenes/ui/meta_upgrade_card.gd
+res://scenes/ui/meta_upgrade_card.tscn

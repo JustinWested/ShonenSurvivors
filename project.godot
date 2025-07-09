@@ -12,6 +12,8 @@ config_version=5
 
 config/name="2d Survivors"
 run/main_scene="uid://u5o0yji32q3c"
+config/use_custom_user_dir=true
+config/custom_user_dir_name="Shonen Survivors"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -19,6 +21,8 @@ config/icon="res://icon.svg"
 
 GameEvents="*res://scenes/autoload/game_events.tscn"
 MusicPlayer="*res://scenes/autoload/music_player.tscn"
+ScreenTransition="*res://scenes/autoload/screen_transition.tscn"
+MetaProgression="*res://scenes/autoload/meta_progression.tscn"
 
 [debug]
 

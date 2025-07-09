@@ -1,3 +1,3 @@
-Theme
 Resource
+Theme
 TileSet
