@@ -4,6 +4,7 @@ const SPAWN_RADIUS = 370
 
 @export var basic_enemy_scene: PackedScene
 @export var crab_enemy_scene: PackedScene
+@export var bat_enemy_scene: PackedScene
 @export var arena_time_manager: Node
 
 @onready var timer = $Timer
@@ -13,6 +14,8 @@ var enemy_table = WeightedTable.new()
 
 func _ready() -> void:
 	enemy_table.add_item(basic_enemy_scene, 10)
+	enemy_table.add_item(bat_enemy_scene, 10000)
+	
 	base_spawn_time = timer.wait_time
 	timer.timeout.connect(on_timer_timeout)
 	arena_time_manager.arena_difficulty_increased.connect(on_arena_difficulty_increased)
@@ -40,4 +43,6 @@ func on_arena_difficulty_increased(arena_difficulty: int):
 	timer.wait_time = base_spawn_time - time_off
 
 	if arena_difficulty == 6:
-		enemy_table.add_item(crab_enemy_scene, 20)
+		enemy_table.add_item(crab_enemy_scene, 15)
+	elif arena_difficulty == 10:
+		enemy_table.add_item(bat_enemy_scene, 8)

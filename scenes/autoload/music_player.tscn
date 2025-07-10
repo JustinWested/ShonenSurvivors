@@ -3,7 +3,6 @@
 [ext_resource type="AudioStream" uid="uid://b4qlst32cs6i4" path="res://assets/audio/BGMusic.wav" id="1_crwak"]
 
 [node name="MusicPlayer" type="AudioStreamPlayer"]
-process_mode = 3
 stream = ExtResource("1_crwak")
 volume_db = -25.0
 autoplay = true

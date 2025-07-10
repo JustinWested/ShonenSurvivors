@@ -20,7 +20,6 @@ config/icon="res://icon.svg"
 [autoload]
 
 GameEvents="*res://scenes/autoload/game_events.tscn"
-MusicPlayer="*res://scenes/autoload/music_player.tscn"
 ScreenTransition="*res://scenes/autoload/screen_transition.tscn"
 MetaProgression="*res://scenes/autoload/meta_progression.tscn"
 
@@ -41,6 +40,7 @@ enemy=""
 entities_layer=""
 foreground_layer=""
 upgrade_card=""
+meta_upgrade_card=""
 
 [gui]
 

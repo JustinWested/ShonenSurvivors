@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=4 uid="uid://brav3qrwhhowm"]
+[gd_scene load_steps=16 format=4 uid="uid://brav3qrwhhowm"]
 
 [ext_resource type="TileSet" uid="uid://5tqns6sfvbyd" path="res://resources/tileset.tres" id="1_0hygj"]
 [ext_resource type="PackedScene" uid="uid://bx3bt4i35r562" path="res://scenes/manager/enemy_manager.tscn" id="1_7cyh6"]
@@ -12,7 +12,9 @@
 [ext_resource type="PackedScene" uid="uid://fg3si73tjlgi" path="res://scenes/ui/vignette.tscn" id="3_th5th"]
 [ext_resource type="PackedScene" uid="uid://du31xwyy42qkq" path="res://scenes/manager/experience_manager.tscn" id="4_hujxm"]
 [ext_resource type="PackedScene" uid="uid://dqwodsggxm0re" path="res://scenes/manager/upgrade_manager.tscn" id="6_b1x3f"]
+[ext_resource type="PackedScene" uid="uid://8fvcn3j27fjd" path="res://scenes/game_object/bat_enemy/bat_enemy.tscn" id="10_raeie"]
 [ext_resource type="PackedScene" uid="uid://cdumd628hcuha" path="res://scenes/game_object/crab_enemy/crab_enemy.tscn" id="11_raeie"]
+[ext_resource type="PackedScene" uid="uid://c4glf62yh68mp" path="res://scenes/autoload/music_player.tscn" id="14_7smn1"]
 
 [node name="main" type="Node"]
 script = ExtResource("1_a8run")
@@ -33,9 +35,14 @@ experience_manager = NodePath("../ExperienceManager")
 
 [node name="EnemyManager" parent="." node_paths=PackedStringArray("arena_time_manager") instance=ExtResource("1_7cyh6")]
 crab_enemy_scene = ExtResource("11_raeie")
+bat_enemy_scene = ExtResource("10_raeie")
 arena_time_manager = NodePath("../ArenaTimeManager")
 
 [node name="ExperienceManager" parent="." instance=ExtResource("4_hujxm")]
+
+[node name="MusicPlayer" parent="." instance=ExtResource("14_7smn1")]
+unique_name_in_owner = true
+process_mode = 3
 
 [node name="GameCamera" parent="." instance=ExtResource("1_8oa0h")]
 
