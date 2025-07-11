@@ -7,35 +7,6 @@
 [ext_resource type="AudioStream" uid="uid://cg5irbeixu0y0" path="res://assets/audio/switch4.ogg" id="5_uq1wo"]
 [ext_resource type="AudioStream" uid="uid://dbv0lj81xnetk" path="res://assets/audio/switch5.ogg" id="6_fgi3g"]
 
-[sub_resource type="Animation" id="Animation_8ur3e"]
-resource_name = "in"
-length = 0.4
-step = 0.05
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:scale")
-tracks/0/interp = 2
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.15, 0.4),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector2(0, 0), Vector2(1.3, 1.3), Vector2(1, 1)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:modulate")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
-}
-
 [sub_resource type="Animation" id="Animation_m44y0"]
 length = 0.001
 tracks/0/type = "value"
@@ -74,6 +45,51 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0)
 }
 
+[sub_resource type="Animation" id="Animation_jntrk"]
+resource_name = "discard"
+length = 0.4
+step = 0.05
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0),
+"points": PackedFloat32Array(0, -0.2, 0, 0, -358, 58, -0.2, 0, 0.2, 0, -900, -0.2, 0, 0.2, 0, -900, -0.2, 0, 0.2, 0),
+"times": PackedFloat32Array(0, 0.1, 0.399422, 0.4)
+}
+
+[sub_resource type="Animation" id="Animation_8ur3e"]
+resource_name = "in"
+length = 0.4
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(1.3, 1.3), Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
 [sub_resource type="Animation" id="Animation_rxqlh"]
 resource_name = "selected"
 length = 0.4
@@ -105,28 +121,27 @@ tracks/1/keys = {
 }]
 }
 
-[sub_resource type="Animation" id="Animation_jntrk"]
-resource_name = "discard"
-length = 0.4
-step = 0.05
-tracks/0/type = "bezier"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position:y")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"handle_modes": PackedInt32Array(0, 0, 0, 0),
-"points": PackedFloat32Array(0, -0.2, 0, 0, -358, 58, -0.2, 0, 0.2, 0, -900, -0.2, 0, 0.2, 0, -900, -0.2, 0, 0.2, 0),
-"times": PackedFloat32Array(0, 0.1, 0.399422, 0.4)
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_c4j7u"]
 _data = {
 &"RESET": SubResource("Animation_m44y0"),
 &"discard": SubResource("Animation_jntrk"),
 &"in": SubResource("Animation_8ur3e"),
 &"selected": SubResource("Animation_rxqlh")
+}
+
+[sub_resource type="Animation" id="Animation_uhqci"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
 }
 
 [sub_resource type="Animation" id="Animation_c4j7u"]
@@ -159,21 +174,6 @@ tracks/1/keys = {
 "args": [0.0],
 "method": &"play"
 }]
-}
-
-[sub_resource type="Animation" id="Animation_uhqci"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_rxqlh"]

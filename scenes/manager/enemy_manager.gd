@@ -13,8 +13,8 @@ var base_spawn_time = 0
 var enemy_table = WeightedTable.new()
 
 func _ready() -> void:
-	enemy_table.add_item(basic_enemy_scene, 10)
-	enemy_table.add_item(bat_enemy_scene, 10000)
+	enemy_table.add_item(basic_enemy_scene, 20)
+	enemy_table.add_item(bat_enemy_scene, 5)
 	
 	base_spawn_time = timer.wait_time
 	timer.timeout.connect(on_timer_timeout)

@@ -1,12 +1,15 @@
-[gd_scene load_steps=2 format=3 uid="uid://bx3bt4i35r562"]
+[gd_scene load_steps=5 format=3 uid="uid://bx3bt4i35r562"]
 
 [ext_resource type="Script" uid="uid://b5ecj7oorf6uq" path="res://scenes/manager/enemy_manager.gd" id="1_3bwe5"]
+[ext_resource type="PackedScene" uid="uid://du685idwy0ify" path="res://scenes/game_object/basic_enemy/basic_enemy.tscn" id="2_l0mv8"]
+[ext_resource type="PackedScene" uid="uid://cdumd628hcuha" path="res://scenes/game_object/crab_enemy/crab_enemy.tscn" id="3_8jsg4"]
+[ext_resource type="PackedScene" uid="uid://8fvcn3j27fjd" path="res://scenes/game_object/bat_enemy/bat_enemy.tscn" id="4_fx4ap"]
 
 [node name="EnemyManager" type="Node"]
 script = ExtResource("1_3bwe5")
-basic_enemy_scene = null
-crab_enemy_scene = null
-bat_enemy_scene = null
+basic_enemy_scene = ExtResource("2_l0mv8")
+crab_enemy_scene = ExtResource("3_8jsg4")
+bat_enemy_scene = ExtResource("4_fx4ap")
 
 [node name="Timer" type="Timer" parent="."]
 one_shot = true

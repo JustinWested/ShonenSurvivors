@@ -1,4 +1,9 @@
+Timer
+Node
 AnimationPlayer
+CollisionShape2D
+HitboxComponent
+Sprite2D
 MarginContainer
 Label
 HBoxContainer
@@ -6,9 +11,5 @@ GridContainer
 TextureRect
 ProgressBar
 Button
-Node
 ColorRect
 CanvasLayer
-AnimationTree
-VBoxContainer
-AudioStreamPlayer
