@@ -57,7 +57,7 @@ script = ExtResource("1_qfmy1")
 health_component = NodePath("../HealthComponent")
 
 [node name="VelocityComponent" parent="." instance=ExtResource("4_jkye5")]
-max_speed = 105
+max_speed = 55
 
 [node name="HitFlashComponent" parent="." node_paths=PackedStringArray("health_component", "sprite") instance=ExtResource("8_v58qd")]
 health_component = NodePath("../HealthComponent")

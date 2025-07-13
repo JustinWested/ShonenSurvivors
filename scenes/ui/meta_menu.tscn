@@ -1,15 +1,16 @@
-[gd_scene load_steps=6 format=3 uid="uid://oapwv42rfa56"]
+[gd_scene load_steps=7 format=3 uid="uid://oapwv42rfa56"]
 
 [ext_resource type="Script" uid="uid://b76ryrrnpdq6i" path="res://scenes/ui/meta_menu.gd" id="1_5fsrx"]
 [ext_resource type="Script" uid="uid://c4st8x3cmsi5e" path="res://resources/meta_upgrades/meta_upgrade.gd" id="2_xe1at"]
 [ext_resource type="Resource" uid="uid://dx2qadt56w7ns" path="res://resources/meta_upgrades/experience_gain.tres" id="3_tykgm"]
+[ext_resource type="Resource" uid="uid://bevd77lcxnkth" path="res://resources/meta_upgrades/health_regen.tres" id="4_tykgm"]
 [ext_resource type="PackedScene" uid="uid://fg3si73tjlgi" path="res://scenes/ui/vignette.tscn" id="4_w0aax"]
 [ext_resource type="PackedScene" uid="uid://bfu8cj3s2kvu" path="res://scenes/ui/sound_button.tscn" id="4_xe1at"]
 
 [node name="MetaMenu" type="CanvasLayer"]
 layer = 2
 script = ExtResource("1_5fsrx")
-upgrades = Array[ExtResource("2_xe1at")]([ExtResource("3_tykgm")])
+upgrades = Array[ExtResource("2_xe1at")]([ExtResource("3_tykgm"), ExtResource("4_tykgm")])
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchors_preset = 15

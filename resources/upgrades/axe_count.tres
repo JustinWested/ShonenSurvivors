@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="AbilityUpgrade" load_steps=2 format=3 uid="uid://dgqc2klgyvttm"]
+
+[ext_resource type="Script" uid="uid://citd5lagry13t" path="res://resources/upgrades/ability_upgrade.gd" id="1_dsb2q"]
+
+[resource]
+script = ExtResource("1_dsb2q")
+id = "axe_count"
+max_quantity = 3
+name = "Axe Count"
+description = "More than one axe I guess"

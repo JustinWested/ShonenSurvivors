@@ -1,0 +1,103 @@
+[gd_scene load_steps=8 format=3 uid="uid://ca127erw16x2r"]
+
+[ext_resource type="Script" uid="uid://t3rquhgjcai" path="res://scenes/ability/spear_ability/spear_ability.gd" id="1_x17d7"]
+[ext_resource type="Texture2D" uid="uid://b5dv1obxvcacf" path="res://scenes/ability/spear_ability/tile_0131.png" id="2_gmr72"]
+[ext_resource type="PackedScene" uid="uid://4h2okramx2w" path="res://scenes/components/hitbox_component.tscn" id="3_1x275"]
+
+[sub_resource type="Animation" id="Animation_aqaks"]
+resource_name = "default"
+length = 0.7
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.7),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.0666667, 0.7),
+"transitions": PackedFloat32Array(1, 4.28709, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -20), Vector2(0, -700)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("HitboxComponent:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.0666667, 0.7),
+"transitions": PackedFloat32Array(1, 4.28, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -20), Vector2(0, -700)]
+}
+
+[sub_resource type="Animation" id="Animation_kgtu2"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("HitboxComponent:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_trtkn"]
+_data = {
+&"RESET": SubResource("Animation_kgtu2"),
+&"default": SubResource("Animation_aqaks")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jcerp"]
+size = Vector2(13.4021, 30.8671)
+
+[node name="SpearAbility" type="Node2D"]
+script = ExtResource("1_x17d7")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_trtkn")
+}
+autoplay = "default"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(1.84, 1.84)
+texture = ExtResource("2_gmr72")
+
+[node name="HitboxComponent" parent="." instance=ExtResource("3_1x275")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
+position = Vector2(-4.76837e-07, 10.5411)
+scale = Vector2(1.94, 1.94)
+shape = SubResource("RectangleShape2D_jcerp")
