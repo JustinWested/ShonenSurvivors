@@ -1,3 +1,6 @@
+MarginContainer
+HBoxContainer
+Label
 Node
 Node2D
 Timer
@@ -6,9 +9,6 @@ Sprite2D
 AnimationPlayer
 GPUParticles2D
 HitboxComponent
-MarginContainer
-Label
-HBoxContainer
 GridContainer
 TextureRect
 ProgressBar

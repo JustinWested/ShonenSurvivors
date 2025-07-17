@@ -54,3 +54,4 @@ res://scenes/ability/spear_ability_controller/spear_ability_controller.gd
 res://scenes/ability/spear_ability/spear_ability.tscn
 res://scenes/ability/spear_ability_controller/spear_ability_controller.tscn
 res://scenes/ability/sword_ability_controller/sword_ability_controller.gd
+res://scenes/ui/main_menu.gd
