@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://du685idwy0ify"]
+[gd_scene load_steps=20 format=3 uid="uid://du685idwy0ify"]
 
 [ext_resource type="Script" uid="uid://bo15tcbguier5" path="res://scenes/game_object/basic_enemy/basic_enemy.gd" id="1_qfmy1"]
 [ext_resource type="Texture2D" uid="uid://b5nvrw2gwnr2" path="res://scenes/game_object/basic_enemy/basic_enemy.png" id="2_7e30h"]
@@ -14,7 +14,12 @@
 [ext_resource type="AudioStream" uid="uid://dyqde6hcew5cu" path="res://assets/audio/footstep_carpet_003.ogg" id="12_qku51"]
 [ext_resource type="AudioStream" uid="uid://lcts8w2x5k5j" path="res://assets/audio/footstep_carpet_004.ogg" id="13_ws2by"]
 
-[sub_resource type="Shader" id="Shader_fcrlo"]
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_fcrlo"]
+properties/0/path = NodePath(".:global_position")
+properties/0/spawn = true
+properties/0/replication_mode = 2
+
+[sub_resource type="Shader" id="Shader_j5o3q"]
 resource_local_to_scene = true
 code = "shader_type canvas_item;
 
@@ -26,9 +31,9 @@ void fragment() {
 	COLOR = final_color;
 }"
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_j5o3q"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jimn8"]
 resource_local_to_scene = true
-shader = SubResource("Shader_fcrlo")
+shader = SubResource("Shader_j5o3q")
 shader_parameter/lerp_percent = 0.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_bq7hi"]
@@ -51,6 +56,9 @@ collision_mask = 9
 motion_mode = 1
 script = ExtResource("1_qfmy1")
 
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_fcrlo")
+
 [node name="HealthComponent" parent="." instance=ExtResource("2_isd1k")]
 
 [node name="VialDropComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("3_pcrk2")]
@@ -62,7 +70,7 @@ max_speed = 55
 [node name="HitFlashComponent" parent="." node_paths=PackedStringArray("health_component", "sprite") instance=ExtResource("8_v58qd")]
 health_component = NodePath("../HealthComponent")
 sprite = NodePath("../Sprite2D")
-hit_flash_material = SubResource("ShaderMaterial_j5o3q")
+hit_flash_material = SubResource("ShaderMaterial_jimn8")
 
 [node name="DeathComponent" parent="." node_paths=PackedStringArray("health_component", "sprite") instance=ExtResource("4_bq7hi")]
 health_component = NodePath("../HealthComponent")

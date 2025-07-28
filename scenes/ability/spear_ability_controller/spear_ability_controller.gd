@@ -51,7 +51,7 @@ func spawn_spear(player: Node2D, direction: Vector2):
 		return
 
 	var spear_instance = spear_ability_scene.instantiate()
-	foreground_layer.add_child(spear_instance)
+	foreground_layer.add_child(spear_instance, true)
 	spear_instance.global_position = player.global_position
 	
 	# The setup function now passes the corrected direction to the spear.

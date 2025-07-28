@@ -42,7 +42,7 @@ func collect():
 		tween.kill()
 
 	if not is_queued_for_deletion():
-		GameEvents.emit_experience_vial_collected(5)
+		GameEvents.emit_experience_vial_collected(1)
 		queue_free()
 
 func make_trail():

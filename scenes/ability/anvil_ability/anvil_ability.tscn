@@ -1,9 +1,17 @@
-[gd_scene load_steps=14 format=3 uid="uid://dh2vq6dwykv35"]
+[gd_scene load_steps=15 format=3 uid="uid://dh2vq6dwykv35"]
 
 [ext_resource type="Script" uid="uid://dj5grvwqhdj35" path="res://scenes/ability/anvil_ability/anvil_ability.gd" id="1_4tak5"]
 [ext_resource type="Texture2D" uid="uid://bhpvj3tbtrlxp" path="res://scenes/ability/anvil_ability/anvil_ability.png" id="2_1311l"]
 [ext_resource type="Texture2D" uid="uid://b1s0otql0alae" path="res://assets/particle.png" id="2_m0lxl"]
 [ext_resource type="PackedScene" uid="uid://4h2okramx2w" path="res://scenes/components/hitbox_component.tscn" id="3_4tak5"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_1311l"]
+properties/0/path = NodePath(".:global_positon")
+properties/0/spawn = true
+properties/0/replication_mode = 0
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 0
 
 [sub_resource type="Animation" id="Animation_t41ol"]
 length = 0.001
@@ -166,6 +174,9 @@ radius = 35.0
 [node name="AnvilAbility" type="Node2D"]
 scale = Vector2(2, 2)
 script = ExtResource("1_4tak5")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_1311l")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://8fvcn3j27fjd"]
+[gd_scene load_steps=23 format=3 uid="uid://8fvcn3j27fjd"]
 
 [ext_resource type="Script" uid="uid://jdx5388faw3h" path="res://scenes/game_object/bat_enemy/bat_enemy.gd" id="1_w7240"]
 [ext_resource type="PackedScene" uid="uid://dvd1na7qu2vg" path="res://scenes/components/health_component.tscn" id="2_dlpuh"]
@@ -15,7 +15,12 @@
 [ext_resource type="AudioStream" uid="uid://lcts8w2x5k5j" path="res://assets/audio/footstep_carpet_004.ogg" id="13_v4vlg"]
 [ext_resource type="Texture2D" uid="uid://bfku068ifygt1" path="res://scenes/game_object/bat_enemy/bat_enemy.png" id="14_8rl44"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_w7240"]
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_w7240"]
+properties/0/path = NodePath(".:global_position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8rl44"]
 resource_local_to_scene = true
 shader = ExtResource("6_hkt13")
 shader_parameter/lerp_percent = 0.0
@@ -99,6 +104,9 @@ collision_layer = 8
 collision_mask = 9
 script = ExtResource("1_w7240")
 
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_w7240")
+
 [node name="HealthComponent" parent="." instance=ExtResource("2_dlpuh")]
 max_health = 40.0
 
@@ -111,7 +119,7 @@ acceleration = 0.75
 [node name="HitFlashComponent" parent="." node_paths=PackedStringArray("health_component", "sprite") instance=ExtResource("5_1bgwa")]
 health_component = NodePath("../HealthComponent")
 sprite = NodePath("../Sprite2D")
-hit_flash_material = SubResource("ShaderMaterial_w7240")
+hit_flash_material = SubResource("ShaderMaterial_8rl44")
 
 [node name="DeathComponent" parent="." node_paths=PackedStringArray("health_component", "sprite") instance=ExtResource("7_pfxth")]
 health_component = NodePath("../HealthComponent")

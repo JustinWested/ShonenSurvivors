@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://ckv0cibp6sebh"]
+[gd_scene load_steps=9 format=3 uid="uid://ckv0cibp6sebh"]
 
 [ext_resource type="Script" uid="uid://d3808lcv2jce1" path="res://scenes/ability/axe_ability/axe_ability.gd" id="1_65u81"]
 [ext_resource type="Texture2D" uid="uid://b3xxmraxpukji" path="res://scenes/ability/axe_ability/axe.png" id="2_m8265"]
@@ -44,6 +44,23 @@ _data = {
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_r58rl"]
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_m8265"]
+properties/0/path = NodePath(".:rotation")
+properties/0/spawn = true
+properties/0/replication_mode = 0
+properties/1/path = NodePath(".:global_position")
+properties/1/spawn = true
+properties/1/replication_mode = 0
+properties/2/path = NodePath(".:base_rotation")
+properties/2/spawn = true
+properties/2/replication_mode = 0
+properties/3/path = NodePath(".:current_direction")
+properties/3/spawn = true
+properties/3/replication_mode = 0
+properties/4/path = NodePath(".:current_radius")
+properties/4/spawn = true
+properties/4/replication_mode = 0
+
 [node name="AxeAbility" type="Node2D"]
 script = ExtResource("1_65u81")
 
@@ -64,3 +81,6 @@ metadata/_custom_type_script = "uid://j7ej5htxilw6"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
 shape = SubResource("CircleShape2D_r58rl")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_m8265")

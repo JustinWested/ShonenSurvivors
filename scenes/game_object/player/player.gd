@@ -1,3 +1,4 @@
+class_name Player
 extends CharacterBody2D
 
 @export var arena_time_manager: Node
@@ -7,14 +8,17 @@ extends CharacterBody2D
 @onready var health_bar = $HealthBar
 @onready var abilities = $Abilities
 @onready var velocity_component = $VelocityComponent
+@onready var player_input_synchronizer_component: PlayerInputSynchronizerComponent = $PlayerInputSynchronizerComponent
 
+var input_multiplayer_authority: int
 var number_colliding_bodies = 0
 var base_speed = 0
 
 func _ready() -> void:
-	base_speed = velocity_component.max_speed
+	player_input_synchronizer_component.set_multiplayer_authority(input_multiplayer_authority)
 	
-	arena_time_manager.arena_difficulty_increased.connect(on_arena_difficulty_increased)
+	#commented out because its making multiplayer not work. will fix later
+	#arena_time_manager.arena_difficulty_increased.connect(on_arena_difficulty_increased)
 	
 	$CollisionArea2D.body_entered.connect(on_body_entered)
 	$CollisionArea2D.body_exited.connect(on_body_exited)
@@ -26,16 +30,16 @@ func _ready() -> void:
 	
 
 func _process(delta: float) -> void:
-	var movement_vector = get_movement_vector()
-	var direction = movement_vector.normalized()
-	velocity_component.accelerate_in_direction(direction)
-	velocity_component.move(self)
+	#CHANGING THIS CODE FOR MULTIPLAYER FUNCTIONALITY. REVIST THIS LATER
+	#var direction = player_input_synchronizer_component.movement_vector.normalized()
+	#velocity_component.accelerate_in_direction(direction)
+	#velocity_component.move(self)
+	
+	
+	if is_multiplayer_authority():
+		velocity = player_input_synchronizer_component.movement_vector * 100
+		move_and_slide()
 
-
-func get_movement_vector():
-	var x_movement = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
-	var y_movement = Input.get_action_strength("move_down") - Input.get_action_strength("move_up")
-	return Vector2(x_movement, y_movement)
 
 func check_deal_damage():
 	if number_colliding_bodies == 0 || !damage_interval_timer.is_stopped():

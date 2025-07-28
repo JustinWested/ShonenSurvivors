@@ -18,7 +18,7 @@ func on_timer_timeout():
 
 	for i in axe_count + 1:
 		var axe_instance = axe_ability_scene.instantiate()
-		get_tree().root.add_child(axe_instance)
+		get_tree().root.add_child(axe_instance, true)
 		axe_instance.global_position = player.global_position
 		var symmetrical_direction = Vector2.RIGHT.rotated(i * angle_slice)
 		axe_instance.setup_direction(symmetrical_direction)

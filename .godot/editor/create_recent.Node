@@ -1,3 +1,5 @@
+MultiplayerSynchronizer
+MultiplayerSpawner
 MarginContainer
 HBoxContainer
 Label
@@ -10,5 +12,3 @@ AnimationPlayer
 GPUParticles2D
 HitboxComponent
 GridContainer
-TextureRect
-ProgressBar

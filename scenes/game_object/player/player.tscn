@@ -1,16 +1,21 @@
-[gd_scene load_steps=17 format=3 uid="uid://bvjm48jsdwgbq"]
+[gd_scene load_steps=18 format=3 uid="uid://bvjm48jsdwgbq"]
 
 [ext_resource type="Script" uid="uid://cm76frtsjot8a" path="res://scenes/game_object/player/player.gd" id="1_cakcy"]
 [ext_resource type="Texture2D" uid="uid://c2lvwmh5nio2b" path="res://scenes/game_object/player/player.png" id="1_f7eaw"]
 [ext_resource type="PackedScene" uid="uid://lu65a8aiivjp" path="res://scenes/ability/sword_ability_controller/sword_ability_controller.tscn" id="2_33fdn"]
+[ext_resource type="PackedScene" uid="uid://bb67cia7rxty" path="res://scenes/components/player_input_synchronizer_component.tscn" id="2_gbew5"]
 [ext_resource type="PackedScene" uid="uid://dvd1na7qu2vg" path="res://scenes/components/health_component.tscn" id="2_ss5pk"]
 [ext_resource type="PackedScene" uid="uid://b2wep08rfvgkm" path="res://scenes/components/velocity_component.tscn" id="2_tj6oj"]
-[ext_resource type="PackedScene" uid="uid://choiffgr35t84" path="res://scenes/ability/spear_ability_controller/spear_ability_controller.tscn" id="5_gbew5"]
 [ext_resource type="AudioStream" uid="uid://qxt87bhl66a2" path="res://assets/audio/impactMining_000.ogg" id="6_28lpv"]
 [ext_resource type="AudioStream" uid="uid://lf1sriur12ma" path="res://assets/audio/impactMining_001.ogg" id="7_gbew5"]
 [ext_resource type="AudioStream" uid="uid://sjphtms0bi4u" path="res://assets/audio/impactMining_002.ogg" id="8_oxhc3"]
 [ext_resource type="AudioStream" uid="uid://cn0fk7qhx3oq5" path="res://assets/audio/impactMining_003.ogg" id="9_mxgtx"]
 [ext_resource type="AudioStream" uid="uid://4j8atqup55b6" path="res://assets/audio/impactMining_004.ogg" id="10_l1g56"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_gbew5"]
+properties/0/path = NodePath(".:global_position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tj6oj"]
 bg_color = Color(0.262745, 0.882353, 0.701961, 1)
@@ -37,9 +42,14 @@ stream_3/stream = ExtResource("9_mxgtx")
 stream_4/stream = ExtResource("10_l1g56")
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
-collision_layer = 17
+collision_layer = 16
 motion_mode = 1
 script = ExtResource("1_cakcy")
+
+[node name="PlayerInputSynchronizerComponent" parent="." instance=ExtResource("2_gbew5")]
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_gbew5")
 
 [node name="VelocityComponent" parent="." instance=ExtResource("2_tj6oj")]
 acceleration = 30.0
@@ -49,8 +59,6 @@ acceleration = 30.0
 [node name="Abilities" type="Node" parent="."]
 
 [node name="SwordAbilityController" parent="Abilities" instance=ExtResource("2_33fdn")]
-
-[node name="SpearAbilityController" parent="Abilities" instance=ExtResource("5_gbew5")]
 
 [node name="DamageIntervalTimer" type="Timer" parent="."]
 wait_time = 0.5

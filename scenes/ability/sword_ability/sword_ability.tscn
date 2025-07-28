@@ -1,8 +1,16 @@
-[gd_scene load_steps=8 format=3 uid="uid://ctdl3yptbxood"]
+[gd_scene load_steps=9 format=3 uid="uid://ctdl3yptbxood"]
 
 [ext_resource type="Texture2D" uid="uid://cof6xloosim24" path="res://scenes/ability/sword_ability/sword.png" id="1_6ih65"]
 [ext_resource type="Script" uid="uid://01os721de4ab" path="res://scenes/ability/sword_ability/sword_ability.gd" id="1_t8g1f"]
 [ext_resource type="PackedScene" uid="uid://4h2okramx2w" path="res://scenes/components/hitbox_component.tscn" id="3_ut1t0"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_t8g1f"]
+properties/0/path = NodePath(".:global_position")
+properties/0/spawn = true
+properties/0/replication_mode = 0
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 0
 
 [sub_resource type="Animation" id="Animation_mfxt2"]
 length = 0.001
@@ -108,6 +116,9 @@ size = Vector2(46, 44)
 
 [node name="SwordAbility" type="Node2D"]
 script = ExtResource("1_t8g1f")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_t8g1f")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

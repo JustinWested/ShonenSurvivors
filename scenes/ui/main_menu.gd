@@ -3,6 +3,7 @@ extends CanvasLayer
 const PORT: int = 3000
 
 var options_scene = preload("res://scenes/ui/options_menu.tscn")
+var main_scene = preload("uid://brav3qrwhhowm")
 
 
 func _ready():
@@ -15,13 +16,12 @@ func _ready():
 	
 	#NETWORK MULTIPLAYER RELATED CODE BEYOND THIS POINT
 	
-	multiplayer.peer_connected.connect(on_peer_connected)
-	
+	multiplayer.connected_to_server.connect(on_connected_to_server)
 
 func on_play_pressed():
 	ScreenTransition.transition()
 	await ScreenTransition.transitioned_halfway
-	get_tree().change_scene_to_file("res://scenes/main/main.tscn")
+	get_tree().change_scene_to_packed(main_scene)
 	
 func on_options_pressed():
 	ScreenTransition.transition()
@@ -52,13 +52,14 @@ func on_host_pressed():
 	var server_peer := ENetMultiplayerPeer.new()
 	server_peer.create_server(PORT)
 	multiplayer.multiplayer_peer = server_peer
+	get_tree().change_scene_to_packed(main_scene)
 	
 	
 func on_join_pressed():
 	var client_peer := ENetMultiplayerPeer.new()
 	client_peer.create_client("127.0.0.1", PORT)
 	multiplayer.multiplayer_peer = client_peer
+
 	
-	
-func on_peer_connected(id : int):
-	pass
+func on_connected_to_server():
+	get_tree().change_scene_to_packed(main_scene)
