@@ -11,23 +11,28 @@ const SPAWN_RADIUS = 370
 
 var base_spawn_time = 0
 var enemy_table = WeightedTable.new()
-var number_to_spawn = 5
+var number_to_spawn = 1
+
 
 func _ready() -> void:
 	enemy_table.add_item(basic_enemy_scene, 20)
-	enemy_table.add_item(bat_enemy_scene, 2)
 	
 	base_spawn_time = timer.wait_time
 	timer.timeout.connect(on_timer_timeout)
 	arena_time_manager.arena_difficulty_increased.connect(on_arena_difficulty_increased)
 
 func on_timer_timeout():
-	timer.start()
-	
+	if is_multiplayer_authority():
+		timer.start()
+		spawn_enemy()
+		
 	var player = get_tree().get_first_node_in_group("player") as Node2D
 	if player == null:
 		return
 	
+
+func spawn_enemy():
+	var player = get_tree().get_first_node_in_group("player") as Node2D
 	for i in number_to_spawn:
 		var enemy_scene = enemy_table.pick_items()
 		var enemy = enemy_scene.instantiate()

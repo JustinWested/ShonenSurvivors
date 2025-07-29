@@ -1,11 +1,10 @@
-[gd_scene load_steps=18 format=3 uid="uid://bvjm48jsdwgbq"]
+[gd_scene load_steps=17 format=3 uid="uid://bvjm48jsdwgbq"]
 
 [ext_resource type="Script" uid="uid://cm76frtsjot8a" path="res://scenes/game_object/player/player.gd" id="1_cakcy"]
 [ext_resource type="Texture2D" uid="uid://c2lvwmh5nio2b" path="res://scenes/game_object/player/player.png" id="1_f7eaw"]
 [ext_resource type="PackedScene" uid="uid://lu65a8aiivjp" path="res://scenes/ability/sword_ability_controller/sword_ability_controller.tscn" id="2_33fdn"]
 [ext_resource type="PackedScene" uid="uid://bb67cia7rxty" path="res://scenes/components/player_input_synchronizer_component.tscn" id="2_gbew5"]
 [ext_resource type="PackedScene" uid="uid://dvd1na7qu2vg" path="res://scenes/components/health_component.tscn" id="2_ss5pk"]
-[ext_resource type="PackedScene" uid="uid://b2wep08rfvgkm" path="res://scenes/components/velocity_component.tscn" id="2_tj6oj"]
 [ext_resource type="AudioStream" uid="uid://qxt87bhl66a2" path="res://assets/audio/impactMining_000.ogg" id="6_28lpv"]
 [ext_resource type="AudioStream" uid="uid://lf1sriur12ma" path="res://assets/audio/impactMining_001.ogg" id="7_gbew5"]
 [ext_resource type="AudioStream" uid="uid://sjphtms0bi4u" path="res://assets/audio/impactMining_002.ogg" id="8_oxhc3"]
@@ -45,14 +44,12 @@ stream_4/stream = ExtResource("10_l1g56")
 collision_layer = 16
 motion_mode = 1
 script = ExtResource("1_cakcy")
+top_ui_margin = 12.0
 
 [node name="PlayerInputSynchronizerComponent" parent="." instance=ExtResource("2_gbew5")]
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_gbew5")
-
-[node name="VelocityComponent" parent="." instance=ExtResource("2_tj6oj")]
-acceleration = 30.0
 
 [node name="HealthComponent" parent="." instance=ExtResource("2_ss5pk")]
 
@@ -63,6 +60,10 @@ acceleration = 30.0
 [node name="DamageIntervalTimer" type="Timer" parent="."]
 wait_time = 0.5
 one_shot = true
+
+[node name="HealthRegenTimer" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
 
 [node name="HealthBar" type="ProgressBar" parent="."]
 custom_minimum_size = Vector2(28, 5)
@@ -86,7 +87,6 @@ position = Vector2(0, -5)
 shape = SubResource("CircleShape2D_s3670")
 
 [node name="CollisionArea2D" type="Area2D" parent="."]
-visible = false
 position = Vector2(0, -6)
 collision_layer = 0
 collision_mask = 8

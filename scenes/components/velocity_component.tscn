@@ -4,3 +4,5 @@
 
 [node name="VelocityComponent" type="Node"]
 script = ExtResource("1_rccra")
+
+[node name="TargetAcquisitionTimer" type="Timer" parent="."]

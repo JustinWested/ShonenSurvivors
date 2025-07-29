@@ -20,7 +20,7 @@ properties/0/path = NodePath(".:global_position")
 properties/0/spawn = true
 properties/0/replication_mode = 1
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_8rl44"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_w7240"]
 resource_local_to_scene = true
 shader = ExtResource("6_hkt13")
 shader_parameter/lerp_percent = 0.0
@@ -119,7 +119,7 @@ acceleration = 0.75
 [node name="HitFlashComponent" parent="." node_paths=PackedStringArray("health_component", "sprite") instance=ExtResource("5_1bgwa")]
 health_component = NodePath("../HealthComponent")
 sprite = NodePath("../Sprite2D")
-hit_flash_material = SubResource("ShaderMaterial_8rl44")
+hit_flash_material = SubResource("ShaderMaterial_w7240")
 
 [node name="DeathComponent" parent="." node_paths=PackedStringArray("health_component", "sprite") instance=ExtResource("7_pfxth")]
 health_component = NodePath("../HealthComponent")
@@ -131,6 +131,8 @@ health_component = NodePath("../HealthComponent")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
 scale = Vector2(0.9, 0.9)
 shape = SubResource("CircleShape2D_g36cv")
+
+[node name="TargetAcquisitionTimer" type="Timer" parent="."]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
