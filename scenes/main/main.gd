@@ -9,8 +9,9 @@ var player_scene: PackedScene = preload("uid://bvjm48jsdwgbq")
 var pause_menu_scene = preload("res://scenes/ui/pause_menu.tscn")
 
 func _ready():
-	#$%Player.health_component.died.connect(on_player_died)
-	
+	GameEvents.player_died.connect(on_player_died)
+
+
 #NETWORK MULTIPLAYER RELATED CODE BEYOND THIS POINT
 #NETWORK MULTIPLAYER RELATED CODE BEYOND THIS POINT
 	
@@ -21,8 +22,7 @@ func _ready():
 		return player
 		
 	peer_ready.rpc_id(1)
-	
-	
+
 	
 func _unhandled_input(event):
 	if event.is_action_pressed("pause"):

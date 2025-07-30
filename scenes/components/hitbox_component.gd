@@ -1,4 +1,5 @@
-extends Area2D
 class_name HitboxComponent
+extends Area2D
 
-var damage = 0
+
+@export var damage = 0

@@ -24,6 +24,7 @@ func _ready() -> void:
 	damage_interval_timer.timeout.connect(on_damage_interval_timer_timeout)
 	health_component.health_decreased.connect(on_health_decreased)
 	health_component.health_changed.connect(on_health_changed)
+	health_component.died.connect(on_player_died)
 	GameEvents.ability_upgrade_added.connect(on_ability_upgrade_added)
 	update_health_display()
 	
@@ -84,13 +85,16 @@ func on_health_decreased():
 	$AudioStreamPlayer2D.play()
 	
 	
+func on_player_died():
+	GameEvents.emit_player_died()
+	
 func on_health_changed():
 	update_health_display()
 
 
 func on_ability_upgrade_added(ability_upgrade: AbilityUpgrade, current_upgrades: Dictionary):
 	if ability_upgrade is Ability:
-		var ability = ability_upgrade as Ability
+		var _ability = ability_upgrade as Ability
 		abilities.add_child(ability_upgrade.ability_controller_scene.instantiate())
 
 
@@ -98,3 +102,5 @@ func on_health_regen_timer_timeout():
 	var health_regen_quantity = 1 + MetaProgression.get_upgrade_count("health_regen")
 	if health_regen_quantity > 0:
 		health_component.heal(health_regen_quantity)
+	print("regen health")
+	health_regen_timer.start()

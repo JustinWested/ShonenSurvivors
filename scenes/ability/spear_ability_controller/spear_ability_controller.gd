@@ -2,7 +2,7 @@ extends Node
 
 @export var spear_ability_scene: PackedScene
 
-var base_damage = 25
+var base_damage = 5
 const MAX_TARGETING_RANGE = 1000
 
 

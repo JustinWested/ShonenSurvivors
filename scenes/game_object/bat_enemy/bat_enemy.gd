@@ -17,10 +17,13 @@ func _physics_process(delta: float) -> void:
 	if not is_instance_valid(target_player):
 		return
 	var direction = (target_player.global_position - global_position).normalized()
-	velocity_component.accelerate_in_direction(direction, delta)
-	velocity_component.move(self)
+	if is_multiplayer_authority():
+		velocity_component.accelerate_in_direction(direction, delta)
+		velocity_component.move(self)
 
 func acquire_nearest_player():
+	if !is_multiplayer_authority():
+		return
 	var players = get_tree().get_nodes_in_group("player")
 	var closest_player: Node2D = null
 	var closest_distance_sq = INF 

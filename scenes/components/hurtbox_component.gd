@@ -1,9 +1,9 @@
-extends Area2D
 class_name HurtboxComponent
+extends Area2D
 
 signal hit
 
-@export var health_component: Node
+@export var health_component: HealthComponent
 
 var floating_text_scene = preload("res://scenes/ui/floating_text.tscn")
 
@@ -12,12 +12,7 @@ func _ready():
 	
 	
 func on_area_entered(other_area: Area2D):
-	if !is_multiplayer_authority():
-		return
-		
-	if not other_area is HitboxComponent:
-		return
-	if health_component == null:
+	if !is_multiplayer_authority() or other_area is not HitboxComponent or health_component == null:
 		return
 		
 	var hitbox_component = other_area as HitboxComponent

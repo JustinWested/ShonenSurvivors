@@ -1,11 +1,25 @@
-[gd_scene load_steps=4 format=3 uid="uid://u5o0yji32q3c"]
+[gd_scene load_steps=7 format=3 uid="uid://u5o0yji32q3c"]
 
 [ext_resource type="Script" uid="uid://b5mnhjbermeti" path="res://scenes/ui/main_menu.gd" id="1_fe2o3"]
 [ext_resource type="PackedScene" uid="uid://bfu8cj3s2kvu" path="res://scenes/ui/sound_button.tscn" id="2_1g8jr"]
 [ext_resource type="PackedScene" uid="uid://fg3si73tjlgi" path="res://scenes/ui/vignette.tscn" id="2_m1kxf"]
+[ext_resource type="Shader" uid="uid://ncwgb6028rsx" path="res://scenes/ui/main_menu.gdshader" id="2_x2yvf"]
+[ext_resource type="Texture2D" uid="uid://bma355yye2ukd" path="res://background.png" id="3_uhagc"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_btxxm"]
+shader = ExtResource("2_x2yvf")
 
 [node name="MainMenu" type="CanvasLayer"]
 script = ExtResource("1_fe2o3")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_repeat = 2
+material = SubResource("ShaderMaterial_btxxm")
+position = Vector2(298, 171)
+rotation = -0.523598
+texture = ExtResource("3_uhagc")
+region_enabled = true
+region_rect = Rect2(0, 0, 1200, 1200)
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchors_preset = 15
