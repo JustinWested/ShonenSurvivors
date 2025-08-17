@@ -1,6 +1,8 @@
 class_name Player
 extends CharacterBody2D
 
+signal died
+
 @export var top_ui_margin: float = 15.0
 
 @onready var damage_interval_timer = $DamageIntervalTimer
@@ -10,6 +12,7 @@ extends CharacterBody2D
 @onready var player_input_synchronizer_component: PlayerInputSynchronizerComponent = $PlayerInputSynchronizerComponent
 @onready var health_regen_timer: Timer = $HealthRegenTimer
 @onready var collision_area: Area2D = $CollisionArea2D
+@onready var sword_ability_controller: Node = $Abilities/SwordAbilityController
 
 var input_multiplayer_authority: int
 var number_colliding_bodies = 0
@@ -17,6 +20,9 @@ var base_speed = 0
 
 func _ready() -> void:
 	player_input_synchronizer_component.set_multiplayer_authority(input_multiplayer_authority)
+	if sword_ability_controller and sword_ability_controller.has_method("set_ability_owner"):
+		sword_ability_controller.set_ability_owner(self)
+	
 	
 	health_regen_timer.timeout.connect(on_health_regen_timer_timeout)
 	collision_area.body_entered.connect(on_body_entered)
@@ -24,10 +30,11 @@ func _ready() -> void:
 	damage_interval_timer.timeout.connect(on_damage_interval_timer_timeout)
 	health_component.health_decreased.connect(on_health_decreased)
 	health_component.health_changed.connect(on_health_changed)
-	health_component.died.connect(on_player_died)
 	GameEvents.ability_upgrade_added.connect(on_ability_upgrade_added)
 	update_health_display()
 	
+	if is_multiplayer_authority():
+		health_component.died.connect(on_player_died)
 
 func _process(delta: float) -> void:
 	if is_multiplayer_authority():
@@ -86,7 +93,7 @@ func on_health_decreased():
 	
 	
 func on_player_died():
-	GameEvents.emit_player_died()
+	died.emit()
 	
 func on_health_changed():
 	update_health_display()

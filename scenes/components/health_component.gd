@@ -29,6 +29,7 @@ func get_health_percent():
 	return min(current_health / max_health, 1)
 
 func check_death():
-	if current_health == 0:
-		died.emit()
-		owner.queue_free()
+	if is_multiplayer_authority():
+		if current_health == 0:
+			died.emit()
+			owner.queue_free()

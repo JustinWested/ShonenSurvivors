@@ -65,6 +65,7 @@ replication_config = SubResource("SceneReplicationConfig_fcrlo")
 [node name="HealthComponent" parent="." instance=ExtResource("2_isd1k")]
 
 [node name="VialDropComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("3_pcrk2")]
+drop_percent = 0.726
 health_component = NodePath("../HealthComponent")
 
 [node name="VelocityComponent" parent="." instance=ExtResource("4_jkye5")]

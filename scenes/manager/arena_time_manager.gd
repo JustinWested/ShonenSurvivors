@@ -9,20 +9,35 @@ const DIFFICULTY_INTERVAL = 5
 @onready var timer=$Timer
 
 var arena_difficulty = 0
+@export var synced_time_elapsed: float = 0.0
+
 
 func _ready():
 	timer.timeout.connect(on_timer_timeout)
 	
+	if not is_multiplayer_authority():
+		timer.stop()
+	
+	
 func _process(delta):
-	var next_time_target = timer.wait_time - ((arena_difficulty + 1) * DIFFICULTY_INTERVAL)
-	if timer.time_left <= next_time_target:
-		arena_difficulty += 1
-		arena_difficulty_increased.emit(arena_difficulty)
+	if is_multiplayer_authority():
+		synced_time_elapsed = timer.wait_time - timer.time_left
+
+	# The difficulty scaling logic should also only run on the host.
+	# This ensures game state changes are authoritative.
+	if is_multiplayer_authority():
+		var next_time_target = timer.wait_time - ((arena_difficulty + 1) * DIFFICULTY_INTERVAL)
+		if timer.time_left <= next_time_target:
+			arena_difficulty += 1
+			arena_difficulty_increased.emit(arena_difficulty)
+
 
 func get_time_elapsed():
-	return timer.wait_time - timer.time_left
+	return synced_time_elapsed
 
 func on_timer_timeout():
+	if not is_multiplayer_authority():
+		return
 	$%MusicPlayer.stop()
 	var end_screen_instance = end_screen_scene.instantiate()
 	add_child(end_screen_instance)

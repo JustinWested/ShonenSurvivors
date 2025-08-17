@@ -2,9 +2,8 @@
 
 [ext_resource type="Script" uid="uid://8x76jnefwecy" path="res://scenes/ui/arena_time_ui.gd" id="1_ytukm"]
 
-[node name="ArenaTimeUI" type="CanvasLayer" node_paths=PackedStringArray("arena_time_manager")]
+[node name="ArenaTimeUI" type="CanvasLayer"]
 script = ExtResource("1_ytukm")
-arena_time_manager = NodePath("MarginContainer/Label")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchors_preset = 15

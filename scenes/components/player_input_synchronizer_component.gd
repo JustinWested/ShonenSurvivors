@@ -3,8 +3,6 @@ extends MultiplayerSynchronizer
 
 var movement_vector: Vector2 = Vector2.ZERO
 
-
-
 func _process(_delta: float):
 	if is_multiplayer_authority():
 		gather_input()

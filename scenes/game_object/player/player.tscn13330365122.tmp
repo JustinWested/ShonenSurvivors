@@ -56,7 +56,6 @@ replication_config = SubResource("SceneReplicationConfig_gbew5")
 [node name="Abilities" type="Node" parent="."]
 
 [node name="SwordAbilityController" parent="Abilities" instance=ExtResource("2_33fdn")]
-process_mode = 4
 
 [node name="DamageIntervalTimer" type="Timer" parent="."]
 wait_time = 0.5

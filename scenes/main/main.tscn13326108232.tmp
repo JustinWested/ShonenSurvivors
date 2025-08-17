@@ -26,7 +26,7 @@ experience_manager = NodePath("../ExperienceManager")
 arena_time_manager = NodePath("../ArenaTimeManager")
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("uid://ctdl3yptbxood", "uid://ckv0cibp6sebh", "uid://dh2vq6dwykv35", "uid://ca127erw16x2r", "uid://du685idwy0ify", "uid://cdumd628hcuha", "uid://8fvcn3j27fjd")
+_spawnable_scenes = PackedStringArray("uid://ctdl3yptbxood", "uid://ckv0cibp6sebh", "uid://dh2vq6dwykv35", "uid://ca127erw16x2r", "uid://du685idwy0ify", "uid://du685idwy0ify", "uid://du685idwy0ify")
 spawn_path = NodePath("../Entities")
 
 [node name="UpgradeManager" parent="." node_paths=PackedStringArray("experience_manager") instance=ExtResource("6_b1x3f")]
@@ -61,7 +61,3 @@ tile_set = ExtResource("1_0hygj")
 y_sort_enabled = true
 
 [node name="Foreground" type="Node2D" parent="." groups=["foreground_layer"]]
-
-[node name="Timer" type="Timer" parent="."]
-wait_time = 8.331
-autostart = true
