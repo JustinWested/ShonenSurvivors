@@ -1,12 +1,16 @@
-[gd_scene load_steps=17 format=3 uid="uid://bvjm48jsdwgbq"]
+[gd_scene load_steps=22 format=3 uid="uid://bvjm48jsdwgbq"]
 
 [ext_resource type="Script" uid="uid://cm76frtsjot8a" path="res://scenes/game_object/player/player.gd" id="1_cakcy"]
 [ext_resource type="Texture2D" uid="uid://c2lvwmh5nio2b" path="res://scenes/game_object/player/player.png" id="1_f7eaw"]
 [ext_resource type="PackedScene" uid="uid://lu65a8aiivjp" path="res://scenes/ability/sword_ability_controller/sword_ability_controller.tscn" id="2_33fdn"]
 [ext_resource type="PackedScene" uid="uid://bb67cia7rxty" path="res://scenes/components/player_input_synchronizer_component.tscn" id="2_gbew5"]
 [ext_resource type="PackedScene" uid="uid://dvd1na7qu2vg" path="res://scenes/components/health_component.tscn" id="2_ss5pk"]
+[ext_resource type="PackedScene" uid="uid://brh7td61r7yyx" path="res://scenes/components/hit_flash_component.tscn" id="4_oxhc3"]
+[ext_resource type="Shader" uid="uid://dkakhlsscx6su" path="res://scenes/components/hit_flash_component.gdshader" id="5_mxgtx"]
 [ext_resource type="AudioStream" uid="uid://qxt87bhl66a2" path="res://assets/audio/impactMining_000.ogg" id="6_28lpv"]
+[ext_resource type="Texture2D" uid="uid://1di0hoc7ctf2" path="res://scenes/game_object/player/grave.png" id="6_gbew5"]
 [ext_resource type="AudioStream" uid="uid://lf1sriur12ma" path="res://assets/audio/impactMining_001.ogg" id="7_gbew5"]
+[ext_resource type="FontFile" uid="uid://crvo3brod67hw" path="res://resources/theme/AtariGames.ttf" id="7_l1g56"]
 [ext_resource type="AudioStream" uid="uid://sjphtms0bi4u" path="res://assets/audio/impactMining_002.ogg" id="8_oxhc3"]
 [ext_resource type="AudioStream" uid="uid://cn0fk7qhx3oq5" path="res://assets/audio/impactMining_003.ogg" id="9_mxgtx"]
 [ext_resource type="AudioStream" uid="uid://4j8atqup55b6" path="res://assets/audio/impactMining_004.ogg" id="10_l1g56"]
@@ -15,6 +19,23 @@
 properties/0/path = NodePath(".:global_position")
 properties/0/spawn = true
 properties/0/replication_mode = 1
+properties/1/path = NodePath("Sprite2D:visible")
+properties/1/spawn = true
+properties/1/replication_mode = 2
+properties/2/path = NodePath("DeathSprite:visible")
+properties/2/spawn = true
+properties/2/replication_mode = 2
+properties/3/path = NodePath("HitFlashComponent:process_mode")
+properties/3/spawn = true
+properties/3/replication_mode = 2
+properties/4/path = NodePath("HealthBar:value")
+properties/4/spawn = true
+properties/4/replication_mode = 2
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_l1g56"]
+resource_local_to_scene = true
+shader = ExtResource("5_mxgtx")
+shader_parameter/lerp_percent = 0.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tj6oj"]
 bg_color = Color(0.262745, 0.882353, 0.701961, 1)
@@ -53,10 +74,14 @@ replication_config = SubResource("SceneReplicationConfig_gbew5")
 
 [node name="HealthComponent" parent="." instance=ExtResource("2_ss5pk")]
 
+[node name="HitFlashComponent" parent="." node_paths=PackedStringArray("health_component", "sprite") instance=ExtResource("4_oxhc3")]
+health_component = NodePath("../HealthComponent")
+sprite = NodePath("../Sprite2D")
+hit_flash_material = SubResource("ShaderMaterial_l1g56")
+
 [node name="Abilities" type="Node" parent="."]
 
 [node name="SwordAbilityController" parent="Abilities" instance=ExtResource("2_33fdn")]
-process_mode = 4
 
 [node name="DamageIntervalTimer" type="Timer" parent="."]
 wait_time = 0.5
@@ -77,6 +102,24 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_tj6oj")
 max_value = 1.0
 value = 0.5
 show_percentage = false
+
+[node name="DisplayNameLabel" type="Label" parent="."]
+custom_minimum_size = Vector2(128, 0)
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -26.0
+offset_top = -27.0
+offset_right = 102.0
+offset_bottom = 1.0
+grow_horizontal = 2
+scale = Vector2(0.4, 0.4)
+theme_override_colors/font_outline_color = Color(0.247059, 0.14902, 0.192157, 1)
+theme_override_constants/outline_size = 16
+theme_override_fonts/font = ExtResource("7_l1g56")
+theme_override_font_sizes/font_size = 32
+text = "Name"
+horizontal_alignment = 1
 
 [node name="PickupArea2D" type="Area2D" parent="."]
 visible = false
@@ -100,6 +143,12 @@ shape = SubResource("CircleShape2D_tj6oj")
 texture_filter = 1
 texture = ExtResource("1_f7eaw")
 offset = Vector2(0, -8)
+
+[node name="DeathSprite" type="Sprite2D" parent="."]
+visible = false
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("6_gbew5")
+offset = Vector2(0, -7)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -5)

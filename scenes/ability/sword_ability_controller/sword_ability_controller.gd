@@ -35,6 +35,7 @@ func on_timer_timeout():
 		# This will now only fail if the player has been destroyed.
 		return
 		
+		
 	# The rest of the logic is now guaranteed to work.
 	var enemies = get_tree().get_nodes_in_group("enemy")
 	enemies = enemies.filter(func(enemy: Node2D): 
@@ -59,7 +60,7 @@ func on_timer_timeout():
 
 @rpc("any_peer", "call_local", "unreliable")
 func spawn_sword_rpc(spawn_position: Vector2, spawn_rotation: float):
-	var local_id = multiplayer.get_unique_id()
+	var _local_id = multiplayer.get_unique_id()
 
 	var sword_instance = sword_ability.instantiate()
 	var foreground_layer = get_tree().get_first_node_in_group("foreground_layer")
@@ -85,9 +86,6 @@ func on_ability_upgrade_added(upgrade: AbilityUpgrade, current_upgrades: Diction
 		var percent_reduction = current_upgrades["sword_rate"]["quantity"] * .1
 		$Timer.wait_time = base_wait_time * (1 - percent_reduction)
 		
-		if multiplayer.get_unique_id() == owner_authority_id:
-			printerr("CONTROLLER DEBUG: Upgrade added: Restarting timer for authority %d." % owner_authority_id)
-			$Timer.start()
+
 	elif upgrade.id == "sword_damage":
 		additional_damage_percent = 1.0 + (current_upgrades["sword_damage"]["quantity"] * 0.15)
-		printerr("CONTROLLER DEBUG: Upgrade added: Sword damage updated for authority %d." % owner_authority_id)

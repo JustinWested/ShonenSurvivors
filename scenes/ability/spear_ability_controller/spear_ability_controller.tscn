@@ -6,6 +6,7 @@
 [node name="SpearAbilityController" type="Node"]
 script = ExtResource("1_s7nm0")
 spear_ability_scene = ExtResource("2_ajxuk")
+base_damage = 2
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 2.0

@@ -1,8 +1,8 @@
 extends Node
 
 @export var axe_ability_scene: PackedScene
+@export var base_damage = 5
 
-var base_damage = 5
 var additional_damage_percent = 1
 var axe_count = 0
 

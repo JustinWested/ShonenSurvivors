@@ -1,6 +1,6 @@
 extends Node
 
-const SPAWN_RADIUS = 370
+const SPAWN_RADIUS = 740
 
 @export var basic_enemy_scene: PackedScene
 @export var crab_enemy_scene: PackedScene
@@ -11,7 +11,7 @@ const SPAWN_RADIUS = 370
 
 var base_spawn_time = 0
 var enemy_table = WeightedTable.new()
-var number_to_spawn = 1
+var number_to_spawn = 3
 
 
 func _ready() -> void:

@@ -13,13 +13,27 @@ signal died
 @onready var health_regen_timer: Timer = $HealthRegenTimer
 @onready var collision_area: Area2D = $CollisionArea2D
 @onready var sword_ability_controller: Node = $Abilities/SwordAbilityController
+@onready var tombstone_sprite: Sprite2D = $DeathSprite
+@onready var player_sprite: Sprite2D = $Sprite2D
+@onready var abilities_node: Node = $Abilities
+@onready var display_name_label: Label = $DisplayNameLabel
+
+
 
 var input_multiplayer_authority: int
 var number_colliding_bodies = 0
 var base_speed = 0
+var is_dead: bool = false
+var display_name: String
 
 func _ready() -> void:
 	player_input_synchronizer_component.set_multiplayer_authority(input_multiplayer_authority)
+	
+	if multiplayer.multiplayer_peer is OfflineMultiplayerPeer:
+		display_name_label.visible = false
+	else:
+		display_name_label.text = display_name
+	
 	if sword_ability_controller and sword_ability_controller.has_method("set_ability_owner"):
 		sword_ability_controller.set_ability_owner(self)
 	
@@ -37,6 +51,9 @@ func _ready() -> void:
 		health_component.died.connect(on_player_died)
 
 func _process(delta: float) -> void:
+	if is_dead:
+		return
+		
 	if is_multiplayer_authority():
 		velocity = player_input_synchronizer_component.movement_vector * 100
 		move_and_slide()
@@ -77,15 +94,22 @@ func check_deal_damage():
 func update_health_display():
 	health_bar.value = health_component.get_health_percent()
 
+
+func set_display_name(incoming_name: String):
+	display_name = incoming_name
+
+
 func on_body_entered(other_body: Node2D):
 	number_colliding_bodies += 1
-	check_deal_damage()
+	if !is_dead:
+		check_deal_damage()
 	
 func on_body_exited(other_body: Node2D):
 	number_colliding_bodies -= 1
 	
 func on_damage_interval_timer_timeout():
-	check_deal_damage()
+	if !is_dead:
+		check_deal_damage()
 	
 func on_health_decreased():
 	GameEvents.emit_player_damaged()
@@ -93,7 +117,16 @@ func on_health_decreased():
 	
 	
 func on_player_died():
+	if not is_multiplayer_authority() or is_dead:
+		return
+		
+	is_dead = true
+	# --- Transform into a Tombstone ---
+	become_tombstone.rpc()
+	
 	died.emit()
+	GameEvents.emit_player_died(get_multiplayer_authority())
+
 	
 func on_health_changed():
 	update_health_display()
@@ -106,8 +139,57 @@ func on_ability_upgrade_added(ability_upgrade: AbilityUpgrade, current_upgrades:
 
 
 func on_health_regen_timer_timeout():
+	if is_dead:
+		return
+	
 	var health_regen_quantity = 1 + MetaProgression.get_upgrade_count("health_regen")
 	if health_regen_quantity > 0:
 		health_component.heal(health_regen_quantity)
 	print("regen health")
 	health_regen_timer.start()
+	
+	
+func _set_abilities_active(is_active: bool):
+	if is_active:
+		abilities_node.process_mode = Node.PROCESS_MODE_INHERIT
+	else:
+		abilities_node.process_mode = Node.PROCESS_MODE_DISABLED
+
+
+	for ability_controller in abilities_node.get_children():
+		if ability_controller.has_node("Timer"):
+			var timer = ability_controller.get_node("Timer")
+			if is_active:
+				timer.start()
+			else:
+				timer.stop()
+
+@rpc("any_peer", "call_local", "reliable")
+func become_tombstone():
+	is_dead = true # Set state on remote clients too
+	
+
+	player_sprite.hide()
+	health_bar.hide()
+	tombstone_sprite.show()
+	collision_area.monitoring = false
+	collision_area.monitorable = false
+
+	_set_abilities_active(false)
+
+@rpc("authority", "call_local", "reliable")
+func respawn():
+	if not is_multiplayer_authority():
+		return
+
+	is_dead = false
+	
+
+	player_sprite.show()
+	health_bar.show()
+	tombstone_sprite.hide()
+	collision_area.monitoring = true
+	collision_area.monitorable = true
+	health_component.reset_health()
+	
+	_set_abilities_active(true)

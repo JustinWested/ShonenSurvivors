@@ -32,4 +32,8 @@ func check_death():
 	if is_multiplayer_authority():
 		if current_health == 0:
 			died.emit()
-			owner.queue_free()
+			
+func reset_health():
+	if is_multiplayer_authority():
+		current_health = max_health/2
+		health_changed.emit()

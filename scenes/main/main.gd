@@ -3,14 +3,15 @@ extends Node
 @onready var multiplayer_spawner: MultiplayerSpawner = $MultiplayerSpawner
 @onready var entities: Node2D = $Entities
 @onready var arena_time_manager: Node = $ArenaTimeManager
+@onready var pause_menu: PauseMenu = $PauseMenu
 
 @export var end_screen_scene: PackedScene
 
-const RESPAWN_DURATION_MSEC = 5000
+const RESPAWN_DURATION_MSEC = 15000
 
 var player_scene: PackedScene = preload("uid://bvjm48jsdwgbq")
-var pause_menu_scene = preload("res://scenes/ui/pause_menu.tscn")
 
+var player_dictionary: Dictionary[int, Player] = {}
 var dead_peers: Array[int] = []
 var dead_peers_respawn_times: Dictionary = {}
 
@@ -19,48 +20,44 @@ func _ready():
 #NETWORK MULTIPLAYER RELATED CODE BEYOND THIS POINT	
 	multiplayer_spawner.spawn_function = func(data):
 		var player = player_scene.instantiate() as Player
+		player.set_display_name(data.display_name)
 		player.name = str(data.peer_id)
 		player.input_multiplayer_authority = data.peer_id
 		
 		if is_multiplayer_authority():
 			player.died.connect(on_player_died.bind(data.peer_id))
 			
+		player_dictionary[data.peer_id] = player
 		return player
 			
-	peer_ready.rpc_id(1)
+	peer_ready.rpc_id(1, MultiplayerConfig.display_name)
+	
+	pause_menu.quit_requested.connect(on_quit_requested)
+	multiplayer.server_disconnected.connect(_on_server_disconnected)
+	if is_multiplayer_authority():
+		multiplayer.peer_disconnected.connect(_on_peer_disconnected)
 
 func _process(delta: float):
-	# This logic only runs on the host, who is the game master.
-	if not is_multiplayer_authority():
-		return
-
-	# If no one is dead, there's nothing to check. This is an efficiency improvement.
-	if dead_peers_respawn_times.is_empty():
-		return
+	if not is_multiplayer_authority(): return
+	if dead_peers_respawn_times.is_empty(): return
 
 	var current_time = Time.get_ticks_msec()
-	# We create a temporary array to avoid modifying the dictionary while iterating over it.
 	var peers_to_respawn: Array[int] = []
 
-	# Check each dead player to see if their time is up.
 	for peer_id in dead_peers_respawn_times:
 		if current_time >= dead_peers_respawn_times[peer_id]:
 			peers_to_respawn.append(peer_id)
 	
-	# Now, process the players who are ready to respawn.
 	if not peers_to_respawn.is_empty():
 		for peer_id in peers_to_respawn:
-			# Remove them from the tracking lists.
 			dead_peers_respawn_times.erase(peer_id)
 			dead_peers.erase(peer_id)
 			
-			# Call your existing, working spawn logic for this specific player.
-			multiplayer_spawner.spawn({ "peer_id": peer_id })
-	
-func _unhandled_input(event):
-	if event.is_action_pressed("pause"):
-		add_child(pause_menu_scene.instantiate())
-		get_tree().root.set_input_as_handled()
+			var player_node_to_respawn = entities.get_node_or_null(str(peer_id))
+			
+			if player_node_to_respawn != null:
+				player_node_to_respawn.respawn.rpc()
+
 	
 	
 func on_player_died(peer_id: int):
@@ -70,16 +67,28 @@ func on_player_died(peer_id: int):
 	
 	var all_players = get_tree().get_nodes_in_group("player")
 	
-	printerr("GAME OVER CHECK: Dead peers: %d. Total players: %d." % [dead_peers.size(), all_players.size()])
 
 	# The game ends if the number of dead players equals the total number of players currently in the scene.
 	if dead_peers.size() >= all_players.size():
-		printerr("GAME OVER CONDITION MET! Triggering defeat screen.")
 		trigger_game_over_rpc.rpc()
 
 
+func on_quit_requested():
+	trigger_game_over_rpc()
+	
 #NETWORK MULTIPLAYER RELATED CODE BEYOND THIS POINT
 #NETWORK MULTIPLAYER RELATED CODE BEYOND THIS POINT
+
+
+func _on_server_disconnected():
+	trigger_game_over_rpc()
+
+func _on_peer_disconnected(peer_id: int):
+	if player_dictionary.has(peer_id):
+		var player := player_dictionary[peer_id]
+		if is_instance_valid(player):
+			player_dictionary[peer_id].on_player_died()
+		player_dictionary.erase(peer_id)
 
 @rpc("any_peer", "call_local", "reliable")
 func trigger_game_over_rpc():
@@ -88,8 +97,14 @@ func trigger_game_over_rpc():
 	add_child(end_screen_instance)
 	end_screen_instance.set_defeat()
 	MetaProgression.save()
-
+	
+	multiplayer.multiplayer_peer = OfflineMultiplayerPeer.new()
+	
+	
 @rpc("any_peer", "call_local", "reliable")
-func peer_ready():
+func peer_ready(display_name: String):
 	var sender_id = multiplayer.get_remote_sender_id()
-	multiplayer_spawner.spawn({ "peer_id": sender_id })
+	multiplayer_spawner.spawn({ 
+		"peer_id": sender_id, 
+		"display_name": display_name 
+		})
