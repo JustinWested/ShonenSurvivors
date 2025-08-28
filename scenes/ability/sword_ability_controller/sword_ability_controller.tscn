@@ -1,11 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://lu65a8aiivjp"]
+[gd_scene load_steps=4 format=3 uid="uid://lu65a8aiivjp"]
 
 [ext_resource type="Script" uid="uid://b8slmmfhoyk52" path="res://scenes/ability/sword_ability_controller/sword_ability_controller.gd" id="1_npsx7"]
-[ext_resource type="PackedScene" uid="uid://ctdl3yptbxood" path="res://scenes/ability/sword_ability/sword_ability.tscn" id="2_pou3m"]
+[ext_resource type="Resource" uid="uid://cakoawgpylvtc" path="res://resources/upgrades/sword.tres" id="2_rfe3v"]
+[ext_resource type="PackedScene" uid="uid://ctdl3yptbxood" path="res://scenes/ability/sword_ability/sword_ability.tscn" id="3_2y0vd"]
 
 [node name="SwordAbilityController" type="Node"]
 script = ExtResource("1_npsx7")
-sword_ability = ExtResource("2_pou3m")
+sword_ability_resource = ExtResource("2_rfe3v")
+sword_ability_scene = ExtResource("3_2y0vd")
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 3.0

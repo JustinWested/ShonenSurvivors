@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://cvtimlvn2y4se"]
+[gd_scene load_steps=19 format=3 uid="uid://cvtimlvn2y4se"]
 
 [ext_resource type="Script" uid="uid://drqa615y6m2yo" path="res://scenes/ui/ability_upgrade_card.gd" id="1_8ur3e"]
 [ext_resource type="AudioStream" uid="uid://bt2w0fn46o8bf" path="res://assets/audio/switch1.ogg" id="2_jntrk"]
@@ -6,6 +6,20 @@
 [ext_resource type="AudioStream" uid="uid://d2kkb2qxabgrh" path="res://assets/audio/switch3.ogg" id="4_rc78b"]
 [ext_resource type="AudioStream" uid="uid://cg5irbeixu0y0" path="res://assets/audio/switch4.ogg" id="5_uq1wo"]
 [ext_resource type="AudioStream" uid="uid://dbv0lj81xnetk" path="res://assets/audio/switch5.ogg" id="6_fgi3g"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_jntrk"]
+properties/0/path = NodePath(".:size")
+properties/0/spawn = true
+properties/0/replication_mode = 2
+properties/1/path = NodePath(".:position")
+properties/1/spawn = true
+properties/1/replication_mode = 2
+properties/2/path = NodePath(".:rotation")
+properties/2/spawn = true
+properties/2/replication_mode = 2
+properties/3/path = NodePath(".:scale")
+properties/3/spawn = true
+properties/3/replication_mode = 2
 
 [sub_resource type="Animation" id="Animation_m44y0"]
 length = 0.001
@@ -207,6 +221,9 @@ offset_bottom = 167.0
 pivot_offset = Vector2(75, 83.5)
 mouse_filter = 1
 script = ExtResource("1_8ur3e")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_jntrk")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

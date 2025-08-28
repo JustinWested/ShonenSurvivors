@@ -1,0 +1,10 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://dswc86yf4sk3b"]
+
+[ext_resource type="Script" uid="uid://cgqy4l26biqfk" path="res://resources/upgrades/AbilityLevelStats.gd" id="1_6uhlg"]
+
+[resource]
+script = ExtResource("1_6uhlg")
+damage_increase = 0
+projectile_increase = 0
+area_multiplier = 1.0
+cooldown_reduction_percent = 0.0

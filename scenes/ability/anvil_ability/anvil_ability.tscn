@@ -183,6 +183,7 @@ libraries = {
 &"": SubResource("AnimationLibrary_ew5gt")
 }
 autoplay = "default"
+speed_scale = 0.839
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
 modulate = Color(1, 1, 1, 0.498039)

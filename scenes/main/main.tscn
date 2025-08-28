@@ -30,11 +30,12 @@ arena_time_manager = NodePath("../ArenaTimeManager")
 visible = false
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("uid://ctdl3yptbxood", "uid://ckv0cibp6sebh", "uid://dh2vq6dwykv35", "uid://ca127erw16x2r", "uid://du685idwy0ify", "uid://cdumd628hcuha", "uid://8fvcn3j27fjd")
+_spawnable_scenes = PackedStringArray("uid://ctdl3yptbxood", "uid://ckv0cibp6sebh", "uid://dh2vq6dwykv35", "uid://ca127erw16x2r", "uid://du685idwy0ify", "uid://cdumd628hcuha", "uid://8fvcn3j27fjd", "uid://ctwbnllk85f7", "uid://ctwbnllk85f7", "uid://ctwbnllk85f7", "uid://ctwbnllk85f7")
 spawn_path = NodePath("../Entities")
 
-[node name="UpgradeManager" parent="." node_paths=PackedStringArray("experience_manager") instance=ExtResource("6_b1x3f")]
+[node name="UpgradeManager" parent="." node_paths=PackedStringArray("experience_manager", "main_scene") instance=ExtResource("6_b1x3f")]
 experience_manager = NodePath("../ExperienceManager")
+main_scene = NodePath("..")
 
 [node name="ArenaTimeManager" parent="." instance=ExtResource("2_67c3q")]
 

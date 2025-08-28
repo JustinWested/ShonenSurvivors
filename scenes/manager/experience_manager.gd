@@ -23,5 +23,10 @@ func increment_experience(number: float):
 		experience_updated.emit(current_experience, target_experience)
 		level_up.emit(current_level)
 
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("debug_level_up"):   # custom action, not raw "2"
+		level_up.emit(current_level)
+
+
 func on_experience_vial_collected(number: float):
 	increment_experience(number)

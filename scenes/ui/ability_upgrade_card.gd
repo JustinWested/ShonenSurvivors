@@ -6,6 +6,7 @@ signal selected
 @onready var description_label: Label = $%DescriptionLabel
 
 var disabled = false
+var is_interactive = false
 
 func _ready():
 	gui_input.connect(on_gui_input)
@@ -40,18 +41,24 @@ func set_ability_upgrade(upgrade: AbilityUpgrade):
 	description_label.text = upgrade.description
 
 func on_gui_input(event: InputEvent):
-	if disabled:
+	if not is_interactive or disabled:
 		return
 		
 	if event.is_action_pressed("left_click"):
 		select_card()
 
 func on_mouse_entered():
-	if disabled == true:
-		print("disabled is true")
+	if not is_interactive or disabled:
 		return
 	$HoverAnimationPlayer.play("hover")
 
 func on_mouse_exited():
 	
 	$HoverAnimationPlayer.play("RESET")
+
+
+func set_interactive(can_interact: bool):
+	is_interactive = can_interact
+	# For visual feedback, we can make the non-interactive cards slightly faded.
+	if not is_interactive:
+		modulate = Color(1, 1, 1, 0.6) # 60% transparent white tint

@@ -44,7 +44,6 @@ func _ready() -> void:
 	damage_interval_timer.timeout.connect(on_damage_interval_timer_timeout)
 	health_component.health_decreased.connect(on_health_decreased)
 	health_component.health_changed.connect(on_health_changed)
-	GameEvents.ability_upgrade_added.connect(on_ability_upgrade_added)
 	update_health_display()
 	
 	if is_multiplayer_authority():
@@ -55,7 +54,7 @@ func _process(delta: float) -> void:
 		return
 		
 	if is_multiplayer_authority():
-		velocity = player_input_synchronizer_component.movement_vector * 100
+		velocity = player_input_synchronizer_component.movement_vector * 300
 		move_and_slide()
 		
 	_clamp_to_camera_bounds()
@@ -130,12 +129,6 @@ func on_player_died():
 	
 func on_health_changed():
 	update_health_display()
-
-
-func on_ability_upgrade_added(ability_upgrade: AbilityUpgrade, current_upgrades: Dictionary):
-	if ability_upgrade is Ability:
-		var _ability = ability_upgrade as Ability
-		abilities.add_child(ability_upgrade.ability_controller_scene.instantiate())
 
 
 func on_health_regen_timer_timeout():

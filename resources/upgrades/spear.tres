@@ -1,12 +1,76 @@
-[gd_resource type="Resource" script_class="Ability" load_steps=3 format=3 uid="uid://oxhfaur45kwk"]
+[gd_resource type="Resource" script_class="Ability" load_steps=11 format=3 uid="uid://o1yooeyweot6"]
 
-[ext_resource type="PackedScene" uid="uid://choiffgr35t84" path="res://scenes/ability/spear_ability_controller/spear_ability_controller.tscn" id="1_bmiop"]
-[ext_resource type="Script" uid="uid://1ke2c74n4d3" path="res://resources/upgrades/ability.gd" id="2_jcsn6"]
+[ext_resource type="Script" uid="uid://1ke2c74n4d3" path="res://resources/upgrades/ability.gd" id="2_h6d1q"]
+[ext_resource type="Script" uid="uid://cgqy4l26biqfk" path="res://resources/upgrades/AbilityLevelStats.gd" id="2_tceyr"]
+
+[sub_resource type="Resource" id="Resource_7658g"]
+script = ExtResource("2_tceyr")
+damage_increase = 0
+projectile_increase = 0
+area_multiplier = 1.0
+cooldown_reduction_percent = 0.0
+metadata/_custom_type_script = "uid://cgqy4l26biqfk"
+
+[sub_resource type="Resource" id="Resource_bmiop"]
+script = ExtResource("2_tceyr")
+damage_increase = 0
+projectile_increase = 1
+area_multiplier = 1.0
+cooldown_reduction_percent = 0.0
+metadata/_custom_type_script = "uid://cgqy4l26biqfk"
+
+[sub_resource type="Resource" id="Resource_jcsn6"]
+script = ExtResource("2_tceyr")
+damage_increase = 0
+projectile_increase = 1
+area_multiplier = 1.0
+cooldown_reduction_percent = 0.0
+metadata/_custom_type_script = "uid://cgqy4l26biqfk"
+
+[sub_resource type="Resource" id="Resource_lfrnb"]
+script = ExtResource("2_tceyr")
+damage_increase = 0
+projectile_increase = 1
+area_multiplier = 1.0
+cooldown_reduction_percent = 0.0
+metadata/_custom_type_script = "uid://cgqy4l26biqfk"
+
+[sub_resource type="Resource" id="Resource_griib"]
+script = ExtResource("2_tceyr")
+damage_increase = 0
+projectile_increase = 1
+area_multiplier = 1.0
+cooldown_reduction_percent = 0.0
+metadata/_custom_type_script = "uid://cgqy4l26biqfk"
+
+[sub_resource type="Resource" id="Resource_dx1vh"]
+script = ExtResource("2_tceyr")
+damage_increase = 0
+projectile_increase = 1
+area_multiplier = 1.0
+cooldown_reduction_percent = 0.0
+metadata/_custom_type_script = "uid://cgqy4l26biqfk"
+
+[sub_resource type="Resource" id="Resource_iwf46"]
+script = ExtResource("2_tceyr")
+damage_increase = 0
+projectile_increase = 1
+area_multiplier = 1.0
+cooldown_reduction_percent = 0.0
+metadata/_custom_type_script = "uid://cgqy4l26biqfk"
+
+[sub_resource type="Resource" id="Resource_1ayr5"]
+script = ExtResource("2_tceyr")
+damage_increase = 0
+projectile_increase = 0
+area_multiplier = 1.0
+cooldown_reduction_percent = 0.0
+metadata/_custom_type_script = "uid://cgqy4l26biqfk"
 
 [resource]
-script = ExtResource("2_jcsn6")
-ability_controller_scene = ExtResource("1_bmiop")
+script = ExtResource("2_h6d1q")
+level_progression = Array[ExtResource("2_tceyr")]([SubResource("Resource_7658g"), SubResource("Resource_bmiop"), SubResource("Resource_jcsn6"), SubResource("Resource_lfrnb"), SubResource("Resource_griib"), SubResource("Resource_dx1vh"), SubResource("Resource_iwf46"), SubResource("Resource_1ayr5")])
 id = "spear"
-max_quantity = 1
+max_quantity = 8
 name = "Spear"
 description = "Stab stab"

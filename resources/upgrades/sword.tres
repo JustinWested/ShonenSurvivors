@@ -1,0 +1,77 @@
+[gd_resource type="Resource" script_class="Ability" load_steps=11 format=3 uid="uid://cakoawgpylvtc"]
+
+[ext_resource type="Script" uid="uid://1ke2c74n4d3" path="res://resources/upgrades/ability.gd" id="2_jcsn6"]
+[ext_resource type="Script" uid="uid://cgqy4l26biqfk" path="res://resources/upgrades/AbilityLevelStats.gd" id="2_lfrnb"]
+
+[sub_resource type="Resource" id="Resource_acgx6"]
+script = ExtResource("2_lfrnb")
+damage_increase = 0
+projectile_increase = 0
+area_multiplier = 1.0
+cooldown_reduction_percent = 0.0
+metadata/_custom_type_script = "uid://cgqy4l26biqfk"
+
+[sub_resource type="Resource" id="Resource_h6d1q"]
+script = ExtResource("2_lfrnb")
+damage_increase = 0
+projectile_increase = 1
+area_multiplier = 1.0
+cooldown_reduction_percent = 0.0
+metadata/_custom_type_script = "uid://cgqy4l26biqfk"
+
+[sub_resource type="Resource" id="Resource_tceyr"]
+script = ExtResource("2_lfrnb")
+damage_increase = 5
+projectile_increase = 0
+area_multiplier = 1.2
+cooldown_reduction_percent = 0.0
+metadata/_custom_type_script = "uid://cgqy4l26biqfk"
+
+[sub_resource type="Resource" id="Resource_5rr6k"]
+script = ExtResource("2_lfrnb")
+damage_increase = 5
+projectile_increase = 0
+area_multiplier = 1.2
+cooldown_reduction_percent = 0.0
+metadata/_custom_type_script = "uid://cgqy4l26biqfk"
+
+[sub_resource type="Resource" id="Resource_2l01p"]
+script = ExtResource("2_lfrnb")
+damage_increase = 0
+projectile_increase = 1
+area_multiplier = 1.0
+cooldown_reduction_percent = 0.0
+metadata/_custom_type_script = "uid://cgqy4l26biqfk"
+
+[sub_resource type="Resource" id="Resource_bnmmr"]
+script = ExtResource("2_lfrnb")
+damage_increase = 5
+projectile_increase = 1
+area_multiplier = 1.0
+cooldown_reduction_percent = 0.0
+metadata/_custom_type_script = "uid://cgqy4l26biqfk"
+
+[sub_resource type="Resource" id="Resource_k5mxc"]
+script = ExtResource("2_lfrnb")
+damage_increase = 0
+projectile_increase = 0
+area_multiplier = 1.0
+cooldown_reduction_percent = 0.0
+metadata/_custom_type_script = "uid://cgqy4l26biqfk"
+
+[sub_resource type="Resource" id="Resource_5jqqq"]
+script = ExtResource("2_lfrnb")
+damage_increase = 0
+projectile_increase = 0
+area_multiplier = 1.0
+cooldown_reduction_percent = 0.0
+metadata/_custom_type_script = "uid://cgqy4l26biqfk"
+
+[resource]
+script = ExtResource("2_jcsn6")
+level_progression = Array[ExtResource("2_lfrnb")]([SubResource("Resource_acgx6"), SubResource("Resource_h6d1q"), SubResource("Resource_tceyr"), SubResource("Resource_5rr6k"), SubResource("Resource_2l01p"), SubResource("Resource_bnmmr"), SubResource("Resource_k5mxc"), SubResource("Resource_5jqqq")])
+id = "sword"
+max_quantity = 8
+name = "Sword"
+description = "sword"
+metadata/_custom_type_script = "uid://1ke2c74n4d3"

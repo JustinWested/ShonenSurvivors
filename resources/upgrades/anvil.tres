@@ -1,12 +1,84 @@
-[gd_resource type="Resource" script_class="Ability" load_steps=3 format=3 uid="uid://cr0b5wchxdwgo"]
+[gd_resource type="Resource" script_class="Ability" load_steps=12 format=3 uid="uid://cr0b5wchxdwgo"]
 
-[ext_resource type="PackedScene" uid="uid://ctwbnllk85f7" path="res://scenes/ability/anvil_ability_controller/anvil_ability_controller.tscn" id="1_7hn83"]
 [ext_resource type="Script" uid="uid://1ke2c74n4d3" path="res://resources/upgrades/ability.gd" id="2_7kwcj"]
+[ext_resource type="Script" uid="uid://cgqy4l26biqfk" path="res://resources/upgrades/AbilityLevelStats.gd" id="2_kwufv"]
+
+[sub_resource type="Resource" id="Resource_r2461"]
+script = ExtResource("2_kwufv")
+damage_increase = 0
+projectile_increase = 0
+area_multiplier = 1.5
+cooldown_reduction_percent = 0.0
+metadata/_custom_type_script = "uid://cgqy4l26biqfk"
+
+[sub_resource type="Resource" id="Resource_7hn83"]
+script = ExtResource("2_kwufv")
+damage_increase = 10
+projectile_increase = 2
+area_multiplier = 1.0
+cooldown_reduction_percent = 0.0
+metadata/_custom_type_script = "uid://cgqy4l26biqfk"
+
+[sub_resource type="Resource" id="Resource_7kwcj"]
+script = ExtResource("2_kwufv")
+damage_increase = 0
+projectile_increase = 1
+area_multiplier = 1.0
+cooldown_reduction_percent = 0.0
+metadata/_custom_type_script = "uid://cgqy4l26biqfk"
+
+[sub_resource type="Resource" id="Resource_kwufv"]
+script = ExtResource("2_kwufv")
+damage_increase = 0
+projectile_increase = 0
+area_multiplier = 1.3
+cooldown_reduction_percent = 0.2
+metadata/_custom_type_script = "uid://cgqy4l26biqfk"
+
+[sub_resource type="Resource" id="Resource_t5yvq"]
+script = ExtResource("2_kwufv")
+damage_increase = 0
+projectile_increase = 1
+area_multiplier = 1.0
+cooldown_reduction_percent = 0.0
+metadata/_custom_type_script = "uid://cgqy4l26biqfk"
+
+[sub_resource type="Resource" id="Resource_18lri"]
+script = ExtResource("2_kwufv")
+damage_increase = 10
+projectile_increase = 1
+area_multiplier = 1.0
+cooldown_reduction_percent = 0.0
+metadata/_custom_type_script = "uid://cgqy4l26biqfk"
+
+[sub_resource type="Resource" id="Resource_un10h"]
+script = ExtResource("2_kwufv")
+damage_increase = 0
+projectile_increase = 0
+area_multiplier = 1.0
+cooldown_reduction_percent = 0.0
+metadata/_custom_type_script = "uid://cgqy4l26biqfk"
+
+[sub_resource type="Resource" id="Resource_qbu4t"]
+script = ExtResource("2_kwufv")
+damage_increase = 0
+projectile_increase = 0
+area_multiplier = 1.0
+cooldown_reduction_percent = 0.0
+metadata/_custom_type_script = "uid://cgqy4l26biqfk"
+
+[sub_resource type="Resource" id="Resource_5ihdn"]
+script = ExtResource("2_kwufv")
+damage_increase = 0
+projectile_increase = 0
+area_multiplier = 1.0
+cooldown_reduction_percent = 0.0
+metadata/_custom_type_script = "uid://cgqy4l26biqfk"
 
 [resource]
 script = ExtResource("2_7kwcj")
-ability_controller_scene = ExtResource("1_7hn83")
+level_progression = Array[ExtResource("2_kwufv")]([SubResource("Resource_r2461"), SubResource("Resource_7hn83"), SubResource("Resource_7kwcj"), SubResource("Resource_kwufv"), SubResource("Resource_t5yvq"), SubResource("Resource_18lri"), SubResource("Resource_un10h"), SubResource("Resource_qbu4t"), SubResource("Resource_5ihdn")])
 id = "anvil"
-max_quantity = 1
+max_quantity = 8
 name = "Anvil"
 description = "Forge this"

@@ -2,90 +2,74 @@ extends Node
 
 const MAX_RANGE = 150
 
-@export var sword_ability: PackedScene
 
-var base_damage = 5
-var additional_damage_percent = 1
+@export var sword_ability_resource: Ability 
+@export var sword_ability_scene: PackedScene 
+
+@onready var player: Node2D = get_parent().get_parent()
+
+var current_level = 0
+var current_projectile_count = 1
+var current_base_damage = 5
+var current_area_multiplier = 1.0
 var base_wait_time
-var owner_authority_id: int = 0 # Initialize to 0 (invalid)
-var owner_player: Node2D
-
-
-func set_ability_owner(player_node: Node2D):
-	owner_player = player_node
-	
-	if owner_player.is_multiplayer_authority():
-		$Timer.start()
-	else:
-		$Timer.stop()
 
 func _ready() -> void:
 	base_wait_time = $Timer.wait_time
 	$Timer.timeout.connect(on_timer_timeout)
-	GameEvents.ability_upgrade_added.connect(on_ability_upgrade_added)
+	if player.is_multiplayer_authority():
+		$Timer.start()
+
+
+func on_new_upgrade_applied(upgrade: AbilityUpgrade, player_specific_upgrades: Dictionary):
+	if sword_ability_resource == null:
+		return
+	if upgrade.id != sword_ability_resource.id:
+		return
+	current_level = player_specific_upgrades.get(upgrade.id, {}).get("quantity", 1)
+	update_stats_for_level(current_level)
+
+
+func update_stats_for_level(level: int):
+	# Reset to base stats before recalculating.
+	current_projectile_count = 1
+	current_base_damage = 5
+	current_area_multiplier = 1.0
+	$Timer.wait_time = base_wait_time
+
+	# The progression array is 0-indexed, so Level 1 is index 0. We loop up to level - 1.
+	for i in range(level):
+		var level_stats = sword_ability_resource.level_progression[i] as AbilityLevelStats
+		current_base_damage += level_stats.damage_increase
+		current_projectile_count += level_stats.projectile_increase
+		current_area_multiplier *= level_stats.area_multiplier
+		$Timer.wait_time *= (1.0 - level_stats.cooldown_reduction_percent)
 	
+	print("Sword updated to Level %s: Projectiles=%s, Damage=%s" % [level, current_projectile_count, current_base_damage])
 
 func on_timer_timeout():
-	if not is_instance_valid(owner_player) or not owner_player.is_multiplayer_authority():
-		return
-
-	# THIS IS THE FIX: Use our new helper function.
-	var player = owner_player
-	if player == null:
-		# This will now only fail if the player has been destroyed.
+	if not is_instance_valid(player):
 		return
 		
-		
-	# The rest of the logic is now guaranteed to work.
 	var enemies = get_tree().get_nodes_in_group("enemy")
 	enemies = enemies.filter(func(enemy: Node2D): 
 		return enemy.global_position.distance_squared_to(player.global_position) < pow(MAX_RANGE, 2)
 	)
-	
-	if enemies.is_empty():
-		return
-		
+	if enemies.is_empty(): return
 	enemies.sort_custom(func(a: Node2D, b: Node2D):
-		var a_distance = a.global_position.distance_squared_to(player.global_position)
-		var b_distance = b.global_position.distance_squared_to(player.global_position)
-		return a_distance < b_distance
+		return a.global_position.distance_squared_to(player.global_position) < b.global_position.distance_squared_to(player.global_position)
 	)
-		
-	var spawn_position = enemies[0].global_position
-	spawn_position += Vector2.RIGHT.rotated(randf_range(0, TAU)) * 4
-	var enemy_direction = enemies[0].global_position - spawn_position
-	var spawn_rotation = enemy_direction.angle()
-
-	spawn_sword_rpc.rpc(spawn_position, spawn_rotation)
-
-@rpc("any_peer", "call_local", "unreliable")
-func spawn_sword_rpc(spawn_position: Vector2, spawn_rotation: float):
-	var _local_id = multiplayer.get_unique_id()
-
-	var sword_instance = sword_ability.instantiate()
-	var foreground_layer = get_tree().get_first_node_in_group("foreground_layer")
-	if foreground_layer != null:
-		foreground_layer.add_child(sword_instance, true)
-
 	
-	var sword_ability_instance = sword_instance as SwordAbility
-	if sword_ability_instance != null and sword_ability_instance.has_node("HitboxComponent"):
-		sword_ability_instance.get_node("HitboxComponent").damage = ceil(base_damage * additional_damage_percent)
+	for i in range(min(enemies.size(), current_projectile_count)):
+		var target_enemy = enemies[i]
+		var spawn_position = target_enemy.global_position + (Vector2.RIGHT.rotated(randf_range(0, TAU)) * 4)
+		var spawn_rotation = (target_enemy.global_position - spawn_position).angle()
 
 
-	sword_instance.global_position = spawn_position
-	sword_instance.rotation = spawn_rotation
-	
-	if sword_instance.has_node("AnimationPlayer"):
-		sword_instance.get_node("AnimationPlayer").play("swing")
-
-
-
-func on_ability_upgrade_added(upgrade: AbilityUpgrade, current_upgrades: Dictionary):
-	if upgrade.id == "sword_rate":
-		var percent_reduction = current_upgrades["sword_rate"]["quantity"] * .1
-		$Timer.wait_time = base_wait_time * (1 - percent_reduction)
+		var sword_instance = sword_ability_scene.instantiate()
 		
-
-	elif upgrade.id == "sword_damage":
-		additional_damage_percent = 1.0 + (current_upgrades["sword_damage"]["quantity"] * 0.15)
+		var unique_name = str(multiplayer.get_unique_id()) + "_" + str(Time.get_ticks_msec()) + str(i)
+		sword_instance.name = unique_name
+		sword_instance.set_multiplayer_authority(multiplayer.get_unique_id())
+		get_tree().get_first_node_in_group("foreground_layer").add_child(sword_instance, true)
+		sword_instance.rpc("initialize", spawn_position, spawn_rotation, current_base_damage, current_area_multiplier)
